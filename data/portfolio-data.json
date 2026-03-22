@@ -4,7 +4,7 @@
     "title": "Software Development Engineer",
     "description": "3+ years of experience building scalable applications and innovative solutions",
     "email": "sparmeet162000@gmail.com",
-    "phone": ["+91 8450910113","+49  15755866330"],
+    "phone": ["+49 15755866330","015567138299"],
     "github": "https://github.com/parmeet10",
     "linkedin": "https://linkedin.com/in/parmeet10"
   },
@@ -55,6 +55,37 @@
   "projects": [
     {
       "id": "1",
+      "title": "SolveWatch AI",
+      "type": "Desktop Application",
+      "description": "AI-powered interview assistant desktop app that captures screenshots, extracts text via OCR, and generates solutions using a multi-provider AI failover system",
+      "features": [
+        "Built a real-time desktop application that captures screenshots during coding interviews, extracts text via OCR, and generates AI-powered solutions using a multi-provider failover system (OpenAI GPT-4o, Groq LLaMA-70B, Google Gemini) with automatic provider health tracking and retry logic",
+        "Designed a dual-modal input pipeline supporting both visual input (screenshot OCR) and audio input (real-time transcription via WebSocket), enabling seamless problem ingestion in live interview scenarios",
+        "Implemented 5 specialized prompt templates (debug, theory, coding, transcription, context) with a hot-swappable prompt system allowing the same problem to be re-analyzed from different angles without re-processing",
+        "Built a real-time WebSocket event streaming architecture with per-connection state isolation, enabling fine-grained UI feedback across 13+ events (OCR start/complete, AI processing, errors)",
+        "Packaged as an Electron desktop app with a HUD overlay (Cmd+Shift+H) and native macOS integration (screenshot capture, Retina scaling, mouse tracking, clipboard access)"
+      ],
+      "technologies": ["Node.js", "Express", "Electron", "Socket.io", "OpenAI", "Groq", "Gemini", "Tesseract.js", "Sharp"],
+      "color": "from-violet-500 to-purple-500"
+    },
+    {
+      "id": "2",
+      "title": "FitXperts",
+      "type": "Full-Stack Web App",
+      "description": "A full-stack fitness tracking platform where users can log exercise sessions, build custom workout plans, and visualize fitness progress over time",
+      "features": [
+        "Built a REST API with Express.js and Supabase (PostgreSQL + Row-Level Security for data isolation)",
+        "Implemented an AI-powered fitness recommendation engine using the OpenAI API",
+        "Developed an analytics dashboard with interactive charts (Recharts) showing strength progression, volume trends, and workout history",
+        "Added a social/friends feature for sharing progress and integrated a TTL in-memory caching layer to reduce database load on analytics endpoints",
+        "Configured drag-and-drop exercise ordering (dnd-kit) and form management (React Hook Form); deployed on Vercel with separate backend and frontend services"
+      ],
+      "technologies": ["Next.js", "React", "Node.js", "Express", "Supabase", "PostgreSQL", "Tailwind CSS", "Recharts", "Zustand", "OpenAI API"],
+      "link": "https://fitxperts-z1iq.vercel.app",
+      "color": "from-green-500 to-teal-500"
+    },
+    {
+      "id": "3",
       "title": "Curl-Logger",
       "type": "NPM Package",
       "description": "A npm package to log curl-request on the console",
@@ -135,6 +166,14 @@
   "education": [
     {
       "id": "1",
+      "institution": "Friedrich-Alexander-Universität Erlangen-Nürnberg (FAU), Germany",
+      "degree": "Master of Science in Computer Science",
+      "period": "2025 - Present",
+      "achievement": "",
+      "color": "from-cyan-500 to-blue-500"
+    },
+    {
+      "id": "2",
       "institution": "Guru Gobind Singh Indraprastha University, Delhi",
       "degree": "Bachelor of Technology in Information Technology",
       "period": "2018-22",
@@ -142,7 +181,7 @@
       "color": "from-blue-500 to-purple-500"
     },
     {
-      "id": "2",
+      "id": "3",
       "institution": "Dl Dav Model School, Delhi",
       "degree": "Central Board of Secondary Education (C.B.S.E)",
       "period": "2018",
