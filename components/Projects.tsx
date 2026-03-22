@@ -60,7 +60,7 @@ export default function Projects() {
                     </span>
                   </div>
 
-                  <p className="text-gray-400 mb-4 flex-grow">{project.description}</p>
+                  <p className="text-gray-400 mb-4">{project.description}</p>
 
                   <div className="mb-6">
                     <h4 className="text-sm font-semibold text-gray-300 mb-2">Features:</h4>

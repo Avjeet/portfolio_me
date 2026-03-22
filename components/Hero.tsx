@@ -212,7 +212,7 @@ export default function Hero() {
             </motion.a>
 
             <motion.a
-              href="/resume/parmeet_resume_phone.pdf"
+              href="/resume/ResumeGerman.pdf"
               download="Parmeet_Singh_Resume.pdf"
               className="flex items-center gap-2 px-6 py-3 glass rounded-full hover:bg-white/10 transition-all glow-effect"
               whileHover={{ scale: 1.05, y: -2 }}
