@@ -91,6 +91,16 @@ html {
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Slow spin for gradient ring */
+@keyframes slowSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spin-slow {
+  animation: slowSpin 8s linear infinite;
+}
+
 /* Enhanced glow effect with better colors */
 .glow-effect {
   box-shadow: 0 0 20px rgba(139, 92, 246, 0.4), 0 0 40px rgba(236, 72, 153, 0.2);

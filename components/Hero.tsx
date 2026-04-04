@@ -228,7 +228,7 @@ export default function Hero() {
             className="flex justify-center"
           >
             <motion.a
-              href="#experience"
+              href="#about"
               className="flex flex-col items-center gap-2 text-gray-400 hover:text-white transition-colors"
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
