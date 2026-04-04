@@ -1,17 +1,23 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useInView } from 'framer-motion'
 import { Code, Database, Cloud, Layers } from 'lucide-react'
-import InterestsSection from './InterestsSection'
-
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Skills as SkillsType } from '@/lib/data'
+import InterestsSection from './InterestsSection'
 
 const iconMap: Record<string, typeof Code> = {
   Languages: Code,
   Technologies: Database,
   'Web Dev Tools': Cloud,
   Frameworks: Layers,
+}
+
+const categoryAccents: Record<string, string> = {
+  Languages: 'from-blue-500 to-cyan-500',
+  Technologies: 'from-violet-500 to-pink-500',
+  'Web Dev Tools': 'from-emerald-500 to-teal-500',
+  Frameworks: 'from-orange-500 to-amber-500',
 }
 
 export default function Skills() {
@@ -21,16 +27,16 @@ export default function Skills() {
     webDevTools: { title: 'Web Dev Tools', skills: [], color: 'from-green-500 to-emerald-500' },
     frameworks: { title: 'Frameworks', skills: [], color: 'from-orange-500 to-red-500' },
   })
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
 
   useEffect(() => {
     fetch('/api/portfolio')
-      .then(res => res.json())
-      .then(data => {
-        if (data.skills) {
-          setSkills(data.skills)
-        }
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.skills) setSkills(d.skills)
       })
-      .catch(err => console.error('Error fetching skills:', err))
+      .catch(() => {})
   }, [])
 
   const skillCategories = [
@@ -39,59 +45,82 @@ export default function Skills() {
     skills.webDevTools,
     skills.frameworks,
   ]
+
   return (
-    <section id="skills" className="relative py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <section id="skills" ref={ref} className="relative py-28 px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          initial={{ opacity: 0, y: 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.65 }}
+          className="text-center mb-20"
         >
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
-            <span className="gradient-text">Technical Skills</span>
+          <span className="section-label">Stack</span>
+          <h2
+            className="text-4xl sm:text-5xl lg:text-6xl font-black gradient-text"
+            style={{ fontFamily: 'var(--font-space, system-ui)' }}
+          >
+            Technical Skills
           </h2>
-          <p className="text-gray-400 text-lg">Technologies I work with</p>
+          <p className="mt-4 text-gray-500 text-base max-w-md mx-auto">
+            Technologies I reach for when building
+          </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {skillCategories.map((category, categoryIndex) => {
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {skillCategories.map((category, catIdx) => {
             const Icon = iconMap[category.title] || Code
+            const gradient = categoryAccents[category.title] || category.color
+
             return (
               <motion.div
-                key={categoryIndex}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: categoryIndex * 0.2 }}
-                className="glass rounded-2xl p-6 sm:p-8 hover:bg-white/10 transition-all duration-300 glow-effect"
+                key={catIdx}
+                initial={{ opacity: 0, y: 32 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{
+                  duration: 0.65,
+                  delay: catIdx * 0.1,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="group card p-6 sm:p-7"
               >
-                <div className="flex items-center gap-4 mb-6">
-                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${category.color} flex items-center justify-center`}>
-                    <Icon size={24} className="text-white" />
+                {/* Category header */}
+                <div className="flex items-center gap-3 mb-5">
+                  <div
+                    className={`w-10 h-10 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center shadow-lg flex-shrink-0`}
+                  >
+                    <Icon size={18} className="text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-white">{category.title}</h3>
+                  <h3
+                    className="text-lg font-bold text-white"
+                    style={{ fontFamily: 'var(--font-space, system-ui)' }}
+                  >
+                    {category.title}
+                  </h3>
+                  <span className="ml-auto text-xs text-gray-600 font-mono">
+                    {category.skills.length} tools
+                  </span>
                 </div>
 
-                <div className="flex flex-wrap gap-3">
-                  {category.skills.map((skill, skillIndex) => (
-                    <motion.div
-                      key={skillIndex}
-                      initial={{ opacity: 0, scale: 0 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
+                {/* Skill chips */}
+                <div className="flex flex-wrap gap-2">
+                  {category.skills.map((skill, skillIdx) => (
+                    <motion.span
+                      key={skillIdx}
+                      initial={{ opacity: 0, scale: 0.85 }}
+                      animate={isInView ? { opacity: 1, scale: 1 } : {}}
                       transition={{
-                        delay: categoryIndex * 0.2 + skillIndex * 0.05,
+                        duration: 0.3,
+                        delay: catIdx * 0.1 + skillIdx * 0.03,
                         type: 'spring',
                         stiffness: 200,
                       }}
-                      whileHover={{ scale: 1.1, y: -2 }}
+                      whileHover={{ scale: 1.08, y: -1 }}
+                      className="tech-tag"
                     >
-                      <div className={`px-4 py-2 rounded-lg bg-gradient-to-r ${category.color} bg-opacity-20 border border-white/10 text-white font-medium text-sm hover:bg-opacity-30 transition-all cursor-default`}>
-                        {skill}
-                      </div>
-                    </motion.div>
+                      {skill}
+                    </motion.span>
                   ))}
                 </div>
               </motion.div>
@@ -104,4 +133,3 @@ export default function Skills() {
     </section>
   )
 }
-

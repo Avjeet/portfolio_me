@@ -1,8 +1,8 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { ExternalLink, Calendar, BookOpen } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { motion, useInView } from 'framer-motion'
+import { ExternalLink, Calendar, BookOpen, ArrowUpRight } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
 
 interface BlogPost {
   title: string
@@ -14,133 +14,145 @@ interface BlogPost {
   categories?: string[]
 }
 
+function cleanText(text: string) {
+  return text
+    .replace(/<[^>]*>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .trim()
+}
+
+function formatDate(dateString: string) {
+  try {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    })
+  } catch {
+    return dateString
+  }
+}
+
 export default function Blogs() {
   const [blogs, setBlogs] = useState<BlogPost[]>([])
   const [loading, setLoading] = useState(true)
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
 
   useEffect(() => {
     fetch('/api/blogs')
-      .then(res => res.json())
-      .then(data => {
-        if (data.blogs) {
-          setBlogs(data.blogs)
-        }
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.blogs) setBlogs(d.blogs)
         setLoading(false)
       })
-      .catch(err => {
-        console.error('Error fetching blogs:', err)
-        setLoading(false)
-      })
+      .catch(() => setLoading(false))
   }, [])
 
-  const formatDate = (dateString: string) => {
-    try {
-      const date = new Date(dateString)
-      return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      })
-    } catch {
-      return dateString
-    }
-  }
-
-  const cleanText = (text: string) => {
-    // Additional safety check to remove any remaining HTML
-    return text
-      .replace(/<[^>]*>/g, '')
-      .replace(/&nbsp;/g, ' ')
-      .replace(/&amp;/g, '&')
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
-      .replace(/&quot;/g, '"')
-      .replace(/&#39;/g, "'")
-      .trim()
-  }
-
   return (
-    <section id="blogs" className="relative py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <section id="blogs" ref={ref} className="relative py-28 px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          initial={{ opacity: 0, y: 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.65 }}
+          className="text-center mb-20"
         >
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
-            <span className="gradient-text">Blogs</span>
+          <span className="section-label">Writing</span>
+          <h2
+            className="text-4xl sm:text-5xl lg:text-6xl font-black gradient-text"
+            style={{ fontFamily: 'var(--font-space, system-ui)' }}
+          >
+            Blogs
           </h2>
-          <p className="text-gray-400 text-lg">My latest articles and thoughts</p>
+          <p className="mt-4 text-gray-500 text-base max-w-md mx-auto">
+            Thoughts on engineering, systems, and software craft
+          </p>
         </motion.div>
 
         {loading ? (
-          <div className="flex justify-center items-center py-20">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          <div className="flex justify-center items-center py-24">
+            <div className="w-8 h-8 rounded-full border-t-2 border-indigo-500 animate-spin" />
           </div>
         ) : blogs.length === 0 ? (
-          <div className="text-center py-20">
-            <BookOpen size={64} className="mx-auto text-gray-600 mb-4" />
-            <p className="text-gray-400 text-lg">No blogs found</p>
+          <div className="text-center py-24">
+            <BookOpen size={48} className="mx-auto text-gray-700 mb-4" />
+            <p className="text-gray-600">No articles found</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {blogs.map((blog, index) => (
-              <motion.div
+              <motion.a
                 key={blog.guid || index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group"
+                href={blog.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 32 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{
+                  duration: 0.65,
+                  delay: index * 0.09,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="group card flex flex-col p-6 sm:p-7 overflow-hidden"
+                whileHover={{ y: -4 }}
               >
-                <motion.a
-                  href={blog.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block glass rounded-2xl p-6 sm:p-8 h-full flex flex-col hover:bg-white/10 transition-all duration-300 glow-effect"
-                  whileHover={{ scale: 1.02, y: -5 }}
+                {/* Top row */}
+                <div className="flex items-start justify-between mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-rose-500 flex items-center justify-center flex-shrink-0 shadow-lg">
+                    <BookOpen size={18} className="text-white" />
+                  </div>
+                  <ArrowUpRight
+                    size={16}
+                    className="text-gray-700 group-hover:text-indigo-400 transition-colors mt-1"
+                  />
+                </div>
+
+                {/* Date */}
+                <div className="flex items-center gap-1.5 text-[11px] text-gray-600 mb-3 font-mono">
+                  <Calendar size={11} />
+                  {formatDate(blog.pubDate)}
+                </div>
+
+                {/* Title */}
+                <h3
+                  className="text-base font-bold text-gray-200 mb-2 line-clamp-2 group-hover:text-white transition-colors leading-snug flex-1"
+                  style={{ fontFamily: 'var(--font-space, system-ui)' }}
                 >
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-orange-500 to-red-500 flex items-center justify-center">
-                      <BookOpen size={24} className="text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 text-gray-400 text-sm">
-                        <Calendar size={14} />
-                        <span>{formatDate(blog.pubDate)}</span>
-                      </div>
-                    </div>
+                  {blog.title}
+                </h3>
+
+                {/* Snippet */}
+                <p className="text-sm text-gray-600 mb-4 line-clamp-3 leading-relaxed">
+                  {cleanText(blog.contentSnippet)}
+                </p>
+
+                {/* Categories */}
+                {blog.categories && blog.categories.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {blog.categories.slice(0, 3).map((cat, i) => (
+                      <span key={i} className="tech-tag">
+                        {cat}
+                      </span>
+                    ))}
                   </div>
+                )}
 
-                  <h3 className="text-xl font-bold text-white mb-3 line-clamp-2 group-hover:text-blue-400 transition-colors">
-                    {blog.title}
-                  </h3>
+                {/* Read more */}
+                <div className="flex items-center gap-1.5 text-indigo-400 text-xs font-semibold mt-auto group-hover:text-indigo-300 transition-colors">
+                  Read article
+                  <ExternalLink size={12} />
+                </div>
 
-                  <p className="text-gray-400 text-sm mb-4 line-clamp-3 flex-grow">
-                    {cleanText(blog.contentSnippet)}
-                  </p>
-
-                  {blog.categories && blog.categories.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {blog.categories.slice(0, 3).map((category, i) => (
-                        <span
-                          key={i}
-                          className="px-2 py-1 text-xs rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-300 border border-blue-500/30"
-                        >
-                          {category}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-
-                  <div className="flex items-center gap-2 text-blue-400 font-semibold mt-auto">
-                    <span>Read More</span>
-                    <ExternalLink size={18} />
-                  </div>
-                </motion.a>
-              </motion.div>
+                {/* Hover gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-orange-500/[0.03] to-rose-500/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none rounded-[1.25rem]" />
+              </motion.a>
             ))}
           </div>
         )}
@@ -148,21 +160,20 @@ export default function Blogs() {
         {blogs.length > 0 && (
           <motion.div
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ delay: 0.5 }}
             className="text-center mt-12"
           >
             <motion.a
               href="https://medium.com/@sparmeet162000"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-4 glass rounded-full hover:bg-white/10 transition-all glow-effect"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center gap-2.5 px-7 py-3.5 glass rounded-full border border-white/10 text-gray-300 text-sm font-medium hover:border-orange-500/30 hover:text-white transition-all duration-200"
+              whileHover={{ scale: 1.04, y: -2 }}
+              whileTap={{ scale: 0.97 }}
             >
-              <BookOpen size={20} />
-              <span className="text-lg">View All on Medium</span>
+              <BookOpen size={16} />
+              All articles on Medium
             </motion.a>
           </motion.div>
         )}
@@ -170,4 +181,3 @@ export default function Blogs() {
     </section>
   )
 }
-

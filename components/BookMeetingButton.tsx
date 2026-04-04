@@ -1,50 +1,35 @@
 'use client'
 
-import { useState } from 'react'
+import { motion } from 'framer-motion'
+import { CalendarDays } from 'lucide-react'
 
 export default function BookMeetingButton() {
-  const [isHovered, setIsHovered] = useState(false)
-
   return (
-    <a
+    <motion.a
       href="https://calendly.com/sparmeet162000/30min"
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-8 right-8 z-50 group"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      aria-label="Book a 1:1 meeting"
+      className="fixed bottom-7 right-7 z-50 group"
+      initial={{ opacity: 0, scale: 0.8, y: 20 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ delay: 1.5, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={{ scale: 1.06, y: -2 }}
+      whileTap={{ scale: 0.95 }}
     >
-      <div className="relative">
-        {/* Glow effect */}
-        <div 
-          className={`absolute inset-0 rounded-full blur-xl transition-all duration-300 ${
-            isHovered 
-              ? 'bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 opacity-60 scale-110' 
-              : 'bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 opacity-40 scale-100'
-          }`}
-        />
-        
-        {/* Button */}
-        <button className="relative px-6 py-3 rounded-full bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white font-semibold text-sm md:text-base shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl border border-white/20 backdrop-blur-sm">
-          <span className="flex items-center gap-2">
-            <svg 
-              className="w-5 h-5" 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-            >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={2} 
-                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" 
-              />
-            </svg>
-            <span>book 1:1</span>
-          </span>
-        </button>
+      {/* Glow halo */}
+      <div className="absolute inset-0 rounded-2xl bg-indigo-600 blur-xl opacity-40 group-hover:opacity-60 group-hover:scale-110 transition-all duration-300" />
+
+      {/* Button */}
+      <div className="relative flex items-center gap-2.5 px-5 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold shadow-2xl shadow-indigo-600/30 border border-indigo-500/50 transition-colors duration-200">
+        <CalendarDays size={16} />
+        <span>Book 1:1</span>
+        {/* Live dot */}
+        <span className="relative flex h-2 w-2 ml-0.5">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-70" />
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+        </span>
       </div>
-    </a>
+    </motion.a>
   )
 }
-

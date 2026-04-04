@@ -1,94 +1,131 @@
 'use client'
 
 import { motion, useInView } from 'framer-motion'
-import { useRef, useState, useEffect } from 'react'
-import { MapPin, Calendar, Code2, Briefcase, GraduationCap, Zap } from 'lucide-react'
+import { useRef, useState } from 'react'
+import {
+  MapPin,
+  Calendar,
+  Code2,
+  Briefcase,
+  GraduationCap,
+  Zap,
+  ArrowRight,
+  Download,
+} from 'lucide-react'
 
 const stats = [
-  { label: 'Years Experience', value: '3+', icon: Briefcase, color: 'from-violet-500 to-purple-500' },
-  { label: 'Companies', value: '3', icon: Code2, color: 'from-pink-500 to-rose-500' },
-  { label: 'Countries Worked', value: '3', icon: MapPin, color: 'from-cyan-500 to-blue-500' },
-  { label: 'Projects Shipped', value: '10+', icon: Zap, color: 'from-amber-500 to-orange-500' },
+  {
+    label: 'Years Experience',
+    value: '3+',
+    icon: Briefcase,
+    gradient: 'from-violet-500 to-indigo-500',
+  },
+  {
+    label: 'Companies',
+    value: '3',
+    icon: Code2,
+    gradient: 'from-pink-500 to-rose-500',
+  },
+  {
+    label: 'Countries',
+    value: '3',
+    icon: MapPin,
+    gradient: 'from-cyan-500 to-blue-500',
+  },
+  {
+    label: 'Projects Shipped',
+    value: '10+',
+    icon: Zap,
+    gradient: 'from-amber-500 to-orange-500',
+  },
 ]
 
 const highlights = [
-  { icon: GraduationCap, text: 'MS Computer Science @ FAU, Germany', color: 'text-cyan-400' },
-  { icon: Briefcase, text: 'SDE-II @ Jio — XR & Spatial Computing', color: 'text-violet-400' },
-  { icon: MapPin, text: 'Based in Erlangen, Germany', color: 'text-pink-400' },
-  { icon: Calendar, text: '3+ years building production systems', color: 'text-emerald-400' },
+  {
+    icon: GraduationCap,
+    text: 'MS CS @ FAU Erlangen-Nürnberg, Germany',
+    color: 'text-cyan-400',
+    bg: 'bg-cyan-500/8',
+    border: 'border-cyan-500/15',
+  },
+  {
+    icon: Briefcase,
+    text: 'SDE-II @ Jio — XR & Spatial Computing',
+    color: 'text-violet-400',
+    bg: 'bg-violet-500/8',
+    border: 'border-violet-500/15',
+  },
+  {
+    icon: MapPin,
+    text: 'Based in Erlangen, Germany',
+    color: 'text-pink-400',
+    bg: 'bg-pink-500/8',
+    border: 'border-pink-500/15',
+  },
+  {
+    icon: Calendar,
+    text: '3+ years in production backend systems',
+    color: 'text-emerald-400',
+    bg: 'bg-emerald-500/8',
+    border: 'border-emerald-500/15',
+  },
 ]
+
+const childVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+}
 
 export default function AboutMe() {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
   const [imageError, setImageError] = useState(false)
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.15, delayChildren: 0.1 },
-    },
-  }
-
-  const leftVariants = {
-    hidden: { opacity: 0, x: -60 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
-  }
-
-  const rightVariants = {
-    hidden: { opacity: 0, x: 60 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
-  }
-
-  const statVariants = {
-    hidden: { opacity: 0, y: 30, scale: 0.9 },
-    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: 'easeOut' } },
-  }
-
   return (
-    <section id="about" ref={ref} className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      {/* Background glow blobs */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-0 w-96 h-96 bg-violet-600/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-0 w-80 h-80 bg-pink-600/10 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-cyan-600/5 rounded-full blur-3xl" />
+    <section
+      id="about"
+      ref={ref}
+      className="relative py-28 px-6 lg:px-8 overflow-hidden"
+    >
+      {/* Section bg blobs */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div className="absolute top-1/4 -left-20 w-80 h-80 bg-violet-600/8 rounded-full blur-[100px]" />
+        <div className="absolute bottom-1/4 -right-20 w-72 h-72 bg-cyan-600/8 rounded-full blur-[90px]" />
       </div>
 
-      <div className="max-w-7xl mx-auto">
-        {/* Section header */}
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.65 }}
+          className="text-center mb-20"
         >
-          <span className="inline-block text-sm font-semibold tracking-widest uppercase text-violet-400 mb-4 px-4 py-1.5 rounded-full border border-violet-500/30 bg-violet-500/10">
-            Get to know me
-          </span>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold">
-            <span className="gradient-text">About Me</span>
+          <span className="section-label">Get to know me</span>
+          <h2
+            className="text-4xl sm:text-5xl lg:text-6xl font-black gradient-text"
+            style={{ fontFamily: 'var(--font-space, system-ui)' }}
+          >
+            About Me
           </h2>
         </motion.div>
 
-        {/* Main grid: image left, text right */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          className="grid lg:grid-cols-2 gap-16 items-center mb-20"
-        >
-          {/* LEFT — Photo */}
-          <motion.div variants={leftVariants} className="flex justify-center lg:justify-end">
+        {/* Main grid */}
+        <div className="grid lg:grid-cols-2 gap-14 lg:gap-20 items-center mb-16">
+          {/* Photo */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+            className="flex justify-center lg:justify-end"
+          >
             <div className="relative group">
-              {/* Static glow border */}
-              <div className="absolute -inset-[3px] rounded-2xl bg-gradient-to-r from-violet-500 via-pink-500 to-cyan-500 opacity-70 blur-sm group-hover:opacity-100 transition-opacity duration-500" />
-
               {/* Rotating gradient ring */}
-              <div className="absolute -inset-[3px] rounded-2xl bg-gradient-to-r from-violet-500 via-pink-500 to-cyan-500 opacity-50 spin-slow" />
+              <div className="absolute -inset-[2px] rounded-2xl bg-gradient-to-r from-indigo-500 via-violet-500 to-cyan-500 opacity-60 blur-sm group-hover:opacity-90 transition-opacity duration-500" />
+              <div className="absolute -inset-[2px] rounded-2xl bg-gradient-to-r from-indigo-500 via-violet-500 to-cyan-500 opacity-40 spin-slow" />
 
               {/* Photo container */}
-              <div className="relative w-72 h-80 sm:w-80 sm:h-96 lg:w-96 lg:h-[480px] rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 to-gray-950 border border-white/10">
+              <div className="relative w-72 h-80 sm:w-80 sm:h-96 lg:w-[360px] lg:h-[460px] rounded-2xl overflow-hidden bg-gray-950 border border-white/8">
                 {!imageError ? (
                   <img
                     src="/profile.JPG"
@@ -97,118 +134,151 @@ export default function AboutMe() {
                     className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                   />
                 ) : (
-                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-violet-900/50 to-pink-900/50">
-                    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-violet-500 to-pink-500 flex items-center justify-center mb-4 text-4xl font-bold text-white">
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-indigo-900/40 to-violet-900/40">
+                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center mb-3 text-2xl font-black text-white">
                       PS
                     </div>
-                    <p className="text-gray-400 text-sm px-4 text-center">Drop profile.JPG in /public to show your photo</p>
+                    <p className="text-gray-500 text-xs px-6 text-center">
+                      Drop profile.JPG in /public to show your photo
+                    </p>
                   </div>
                 )}
-
-                {/* Gradient overlay at bottom */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-
-                {/* Name badge at bottom */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
+                {/* Name badge */}
                 <div className="absolute bottom-4 left-4 right-4">
-                  <div className="glass rounded-xl px-4 py-2 border border-white/10">
-                    <p className="text-white font-semibold text-sm">Parmeet Singh</p>
-                    <p className="text-violet-300 text-xs">Software Development Engineer</p>
+                  <div className="glass rounded-xl px-4 py-2.5 border border-white/10">
+                    <p className="text-white font-semibold text-sm leading-none mb-0.5">
+                      Parmeet Singh
+                    </p>
+                    <p className="text-indigo-300 text-xs">
+                      Software Development Engineer
+                    </p>
                   </div>
                 </div>
               </div>
 
-              {/* Floating badge — top right */}
+              {/* Floating badges */}
               <motion.div
-                className="absolute -top-4 -right-4 glass rounded-full px-3 py-2 border border-violet-500/30 bg-violet-500/10 flex items-center gap-1.5 shadow-lg z-10"
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                className="absolute -top-4 -right-4 glass rounded-full px-3 py-1.5 border border-indigo-500/25 flex items-center gap-1.5 shadow-xl z-10 text-xs text-white font-medium"
+                animate={{ y: [0, -5, 0] }}
+                transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
               >
-                <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-                <span className="text-xs text-white font-medium whitespace-nowrap">Open to opportunities</span>
+                <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
+                Open to work
               </motion.div>
 
-              {/* Floating badge — bottom left */}
               <motion.div
-                className="absolute -bottom-4 -left-4 glass rounded-xl px-3 py-2 border border-pink-500/30 bg-pink-500/10 shadow-lg z-10"
-                animate={{ y: [0, 6, 0] }}
-                transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+                className="absolute -bottom-4 -left-4 glass rounded-xl px-3 py-1.5 border border-violet-500/25 shadow-xl z-10 text-xs text-violet-300 font-medium"
+                animate={{ y: [0, 5, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
               >
-                <p className="text-xs text-pink-300 font-medium">🎓 MS @ FAU Germany</p>
+                🎓 MS @ FAU Germany
               </motion.div>
             </div>
           </motion.div>
 
-          {/* RIGHT — Text content */}
-          <motion.div variants={rightVariants} className="space-y-6">
+          {/* Text content */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+            className="space-y-6"
+          >
             <div className="space-y-4">
               <p className="text-lg sm:text-xl text-gray-200 leading-relaxed font-light">
-                I&apos;m a Software Development Engineer with a passion for building systems that scale. From crafting real-time XR voice pipelines at Jio to architecting full-stack platforms from scratch — I thrive at the intersection of backend engineering and innovative product thinking.
+                I&apos;m a Software Development Engineer with a passion for
+                building systems that scale. From crafting real-time XR voice
+                pipelines at Jio to architecting full-stack platforms from
+                scratch — I thrive at the intersection of backend engineering
+                and innovative product thinking.
               </p>
-              <p className="text-base text-gray-400 leading-relaxed">
-                Currently pursuing my Master&apos;s in Computer Science at Friedrich-Alexander-Universität Erlangen-Nürnberg, Germany, I bring a global perspective shaped by working across India, Kyrgyzstan, and Germany. I specialize in Node.js, TypeScript, and distributed systems, with hands-on experience in gRPC, WebSockets, microservices, and cloud infrastructure. When I&apos;m not writing code, I&apos;m exploring new technologies, contributing to open source, or thinking about the next problem worth solving.
+              <p className="text-base text-gray-500 leading-relaxed">
+                Currently pursuing my Master&apos;s in CS at
+                Friedrich-Alexander-Universität Erlangen-Nürnberg, Germany. I
+                specialize in Node.js, TypeScript, and distributed systems —
+                with hands-on experience in gRPC, WebSockets, microservices,
+                and cloud infrastructure.
               </p>
             </div>
 
             {/* Highlights */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
               {highlights.map((item, i) => (
                 <motion.div
                   key={i}
-                  className="flex items-center gap-3 glass rounded-xl px-4 py-3 border border-white/5 hover:border-white/15 transition-colors group"
-                  whileHover={{ x: 4 }}
-                  transition={{ duration: 0.2 }}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl border ${item.bg} ${item.border} transition-all duration-200 hover:scale-[1.01] group`}
+                  whileHover={{ x: 3 }}
+                  transition={{ duration: 0.18 }}
                 >
-                  <item.icon size={16} className={`${item.color} flex-shrink-0`} />
-                  <span className="text-sm text-gray-300 group-hover:text-white transition-colors">{item.text}</span>
+                  <item.icon
+                    size={15}
+                    className={`${item.color} flex-shrink-0`}
+                  />
+                  <span className="text-xs text-gray-400 group-hover:text-gray-200 transition-colors font-medium">
+                    {item.text}
+                  </span>
                 </motion.div>
               ))}
             </div>
 
-            {/* CTA */}
-            <div className="flex flex-wrap gap-3 pt-2">
+            {/* CTAs */}
+            <div className="flex flex-wrap gap-3 pt-1">
               <motion.a
                 href="#experience"
-                className="px-6 py-3 rounded-full bg-gradient-to-r from-violet-600 to-pink-600 text-white font-semibold text-sm hover:from-violet-500 hover:to-pink-500 transition-all shadow-lg shadow-violet-500/25"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
+                className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-all duration-200 shadow-lg shadow-indigo-600/25"
+                whileHover={{ scale: 1.04, y: -1 }}
+                whileTap={{ scale: 0.97 }}
               >
                 View Experience
+                <ArrowRight size={15} />
               </motion.a>
               <motion.a
                 href="/resume/ResumeGerman.pdf"
                 download="Parmeet_Singh_Resume.pdf"
-                className="px-6 py-3 rounded-full glass border border-white/15 text-white font-semibold text-sm hover:bg-white/10 transition-all"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
+                className="flex items-center gap-2 px-6 py-2.5 rounded-full glass border border-white/12 text-white font-semibold text-sm hover:border-white/25 hover:bg-white/8 transition-all duration-200"
+                whileHover={{ scale: 1.04, y: -1 }}
+                whileTap={{ scale: 0.97 }}
               >
+                <Download size={15} />
                 Download CV
               </motion.a>
             </div>
           </motion.div>
-        </motion.div>
+        </div>
 
-        {/* Stats row */}
+        {/* Stats grid */}
         <motion.div
-          variants={containerVariants}
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
+          variants={{
+            visible: { transition: { staggerChildren: 0.1, delayChildren: 0.3 } },
+          }}
           className="grid grid-cols-2 sm:grid-cols-4 gap-4"
         >
           {stats.map((stat, i) => (
             <motion.div
               key={i}
-              variants={statVariants}
-              className="relative group glass rounded-2xl p-6 border border-white/5 hover:border-white/15 transition-all overflow-hidden text-center"
+              variants={childVariants}
+              className="relative group overflow-hidden rounded-2xl border border-white/7 bg-white/[0.025] p-6 text-center transition-all duration-350 hover:border-indigo-500/25 hover:bg-white/[0.04]"
               whileHover={{ y: -4, scale: 1.02 }}
             >
-              <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
-              <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${stat.color} mb-3 shadow-lg mx-auto`}>
+              <div
+                className={`absolute inset-0 bg-gradient-to-br ${stat.gradient} opacity-0 group-hover:opacity-[0.04] transition-opacity duration-400`}
+              />
+              <div
+                className={`inline-flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br ${stat.gradient} mb-3 shadow-lg mx-auto`}
+              >
                 <stat.icon size={20} className="text-white" />
               </div>
-              <p className={`text-3xl font-bold bg-gradient-to-br ${stat.color} bg-clip-text text-transparent`}>
+              <p
+                className={`text-3xl font-black bg-gradient-to-br ${stat.gradient} bg-clip-text text-transparent mb-0.5`}
+                style={{ fontFamily: 'var(--font-space, system-ui)' }}
+              >
                 {stat.value}
               </p>
-              <p className="text-xs text-gray-400 mt-1 font-medium uppercase tracking-wide">{stat.label}</p>
+              <p className="text-[11px] text-gray-500 font-semibold uppercase tracking-wider">
+                {stat.label}
+              </p>
             </motion.div>
           ))}
         </motion.div>

@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import { motion, useMotionValue, useSpring } from 'framer-motion'
 import Hero from '@/components/Hero'
 import AboutMe from '@/components/AboutMe'
 import Experience from '@/components/Experience'
@@ -12,159 +13,108 @@ import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import BookMeetingButton from '@/components/BookMeetingButton'
 
-export default function Home() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const nodesRef = useRef<Array<{ x: number; y: number; vx: number; vy: number }>>([])
+function CustomCursor() {
+  const mouseX = useMotionValue(-100)
+  const mouseY = useMotionValue(-100)
+  const springCfg = { damping: 22, stiffness: 350, mass: 0.4 }
+  const ringX = useSpring(mouseX, springCfg)
+  const ringY = useSpring(mouseY, springCfg)
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
+    // Only enable custom cursor for pointer devices
+    if (window.matchMedia('(hover: none)').matches) return
+
+    document.documentElement.classList.add('cursor-none')
+
+    const move = (e: MouseEvent) => {
+      mouseX.set(e.clientX)
+      mouseY.set(e.clientY)
     }
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
-
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
-
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-    }
-    resizeCanvas()
-    window.addEventListener('resize', resizeCanvas)
-
-    // Create nodes
-    const nodeCount = 50
-    const nodes: Array<{ x: number; y: number; vx: number; vy: number }> = []
-    for (let i = 0; i < nodeCount; i++) {
-      nodes.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-      })
-    }
-    nodesRef.current = nodes
-
-    let animationFrameId: number
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-      // Update nodes
-      nodes.forEach(node => {
-        node.x += node.vx
-        node.y += node.vy
-
-        if (node.x < 0 || node.x > canvas.width) node.vx *= -1
-        if (node.y < 0 || node.y > canvas.height) node.vy *= -1
-
-        node.x = Math.max(0, Math.min(canvas.width, node.x))
-        node.y = Math.max(0, Math.min(canvas.height, node.y))
-      })
-
-      // Draw lines between nearby nodes
-      const maxDistance = 150
-      nodes.forEach((node, i) => {
-        nodes.slice(i + 1).forEach(otherNode => {
-          const dx = node.x - otherNode.x
-          const dy = node.y - otherNode.y
-          const distance = Math.sqrt(dx * dx + dy * dy)
-
-          if (distance < maxDistance) {
-            const opacity = (1 - distance / maxDistance) * 0.3
-            ctx.strokeStyle = `rgba(99, 102, 241, ${opacity})`
-            ctx.lineWidth = 1
-            ctx.beginPath()
-            ctx.moveTo(node.x, node.y)
-            ctx.lineTo(otherNode.x, otherNode.y)
-            ctx.stroke()
-          }
-        })
-
-        // Draw lines to mouse cursor
-        const dx = node.x - mousePosition.x
-        const dy = node.y - mousePosition.y
-        const distance = Math.sqrt(dx * dx + dy * dy)
-
-        if (distance < maxDistance * 1.5) {
-          const opacity = (1 - distance / (maxDistance * 1.5)) * 0.4
-          const gradient = ctx.createLinearGradient(node.x, node.y, mousePosition.x, mousePosition.y)
-          gradient.addColorStop(0, `rgba(139, 92, 246, ${opacity})`)
-          gradient.addColorStop(1, `rgba(236, 72, 153, ${opacity})`)
-          ctx.strokeStyle = gradient
-          ctx.lineWidth = 1.5
-          ctx.beginPath()
-          ctx.moveTo(node.x, node.y)
-          ctx.lineTo(mousePosition.x, mousePosition.y)
-          ctx.stroke()
-        }
-
-        // Draw nodes
-        ctx.fillStyle = 'rgba(99, 102, 241, 0.6)'
-        ctx.beginPath()
-        ctx.arc(node.x, node.y, 2, 0, Math.PI * 2)
-        ctx.fill()
-      })
-
-      animationFrameId = requestAnimationFrame(animate)
-    }
-    animate()
-
+    window.addEventListener('mousemove', move)
     return () => {
-      window.removeEventListener('resize', resizeCanvas)
-      cancelAnimationFrame(animationFrameId)
+      window.removeEventListener('mousemove', move)
+      document.documentElement.classList.remove('cursor-none')
     }
-  }, [mousePosition])
+  }, [mouseX, mouseY])
 
   return (
-    <main className="relative min-h-screen bg-gradient-to-br from-black via-gray-950 to-black">
-      {/* Animated background gradient */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div 
-          className="absolute w-[600px] h-[600px] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full opacity-15 blur-3xl transition-all duration-1000"
-          style={{
-            left: `${mousePosition.x / 15}px`,
-            top: `${mousePosition.y / 15}px`,
-            transform: 'translate(-50%, -50%)',
-          }}
-        />
-        <div 
-          className="absolute w-[400px] h-[400px] bg-gradient-to-r from-pink-500 via-rose-500 to-orange-500 rounded-full opacity-10 blur-3xl transition-all duration-1000 delay-500"
-          style={{
-            left: `${50 + mousePosition.x / 30}%`,
-            top: `${50 + mousePosition.y / 30}%`,
-            transform: 'translate(-50%, -50%)',
-          }}
-        />
-      </div>
-
-      {/* Animated lines canvas */}
-      <canvas
-        ref={canvasRef}
-        className="fixed inset-0 pointer-events-none z-0"
-        style={{ mixBlendMode: 'screen' }}
+    <>
+      {/* Dot — follows instantly */}
+      <motion.div
+        className="fixed pointer-events-none z-[9999] rounded-full bg-indigo-400"
+        style={{
+          x: mouseX,
+          y: mouseY,
+          width: 8,
+          height: 8,
+          translateX: '-50%',
+          translateY: '-50%',
+        }}
       />
-
-      {/* Grid pattern overlay */}
-      <div className="fixed inset-0 bg-[linear-gradient(to_right,#a855f710_1px,transparent_1px),linear-gradient(to_bottom,#a855f710_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none z-0" />
-
-      <Navigation />
-      <Hero />
-      <AboutMe />
-      <Experience />
-      <Projects />
-      <Skills />
-      <Education />
-      <Blogs />
-      <Footer />
-      <BookMeetingButton />
-    </main>
+      {/* Ring — follows with spring lag */}
+      <motion.div
+        className="fixed pointer-events-none z-[9998] rounded-full"
+        style={{
+          x: ringX,
+          y: ringY,
+          width: 36,
+          height: 36,
+          translateX: '-50%',
+          translateY: '-50%',
+          border: '1px solid rgba(99,102,241,0.45)',
+        }}
+      />
+    </>
   )
 }
 
+export default function Home() {
+  return (
+    <>
+      <CustomCursor />
+
+      {/* Film grain overlay */}
+      <div
+        aria-hidden="true"
+        className="fixed inset-0 pointer-events-none z-[9997]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E")`,
+          backgroundRepeat: 'repeat',
+          backgroundSize: '180px 180px',
+          opacity: 0.028,
+        }}
+      />
+
+      <main className="relative min-h-screen bg-[#050505]">
+        {/* Ambient background blobs */}
+        <div className="fixed inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+          <div className="absolute top-[-10%] left-[20%] w-[700px] h-[700px] bg-indigo-950/60 rounded-full blur-[140px]" />
+          <div className="absolute bottom-[10%] right-[10%] w-[500px] h-[500px] bg-violet-950/50 rounded-full blur-[120px]" />
+          <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[900px] h-[400px] bg-cyan-950/30 rounded-full blur-[160px]" />
+        </div>
+
+        {/* Subtle grid */}
+        <div
+          aria-hidden="true"
+          className="fixed inset-0 pointer-events-none"
+          style={{
+            backgroundImage:
+              'linear-gradient(to right, rgba(255,255,255,0.018) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.018) 1px, transparent 1px)',
+            backgroundSize: '72px 72px',
+          }}
+        />
+
+        <Navigation />
+        <Hero />
+        <AboutMe />
+        <Experience />
+        <Projects />
+        <Skills />
+        <Education />
+        <Blogs />
+        <Footer />
+        <BookMeetingButton />
+      </main>
+    </>
+  )
+}
