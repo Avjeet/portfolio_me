@@ -66,6 +66,7 @@
         "Packaged as an Electron desktop app with a HUD overlay (Cmd+Shift+H) and native macOS integration (screenshot capture, Retina scaling, mouse tracking, clipboard access)"
       ],
       "technologies": ["Node.js", "Express", "Electron", "Socket.io", "OpenAI", "Groq", "Gemini", "Tesseract.js", "Sharp"],
+      "link": "https://solvewatchai.vercel.app",
       "color": "from-violet-500 to-purple-500"
     },
     {
