@@ -6,10 +6,10 @@ import { useEffect, useState } from 'react'
 import PhoneNumber from './PhoneNumber'
 
 const roles = [
-  'Software Development Engineer',
-  'Backend Systems Architect',
-  'XR & Spatial Computing Dev',
-  'Full-Stack Builder',
+  'Android & KMP Engineer',
+  'Multiplatform Mobile Architect',
+  'GSoC Mentor & Open Source Contributor',
+  'Compose Multiplatform Developer',
 ]
 
 function useTypewriter(
@@ -66,14 +66,14 @@ function useTypewriter(
 
 export default function Hero() {
   const [personalInfo, setPersonalInfo] = useState({
-    name: 'Parmeet Singh',
-    title: 'Software Development Engineer',
+    name: 'Avjeet Singh',
+    title: 'Multiplatform Mobile Architect | Android Engineer',
     description:
-      '3+ years of experience building scalable applications and innovative solutions',
-    email: 'sparmeet162000@gmail.com',
-    phone: ['+91 8450910113', '+49 15755866330'],
-    github: 'https://github.com/parmeet10',
-    linkedin: 'https://linkedin.com/in/parmeet10',
+      '6+ years building Android, KMP & CMP applications. GSoC Mentor, Hackathon Winner.',
+    email: 'singh.avjeet02@gmail.com',
+    phone: ['+91 8527949323'],
+    github: 'https://github.com/Avjeet',
+    linkedin: 'https://www.linkedin.com/in/avjeet-singh-73572a138',
   })
   const [visitCount, setVisitCount] = useState<number | null>(null)
   const role = useTypewriter(roles)
@@ -107,7 +107,7 @@ export default function Hero() {
     }
   }, [])
 
-  const nameParts = ['PARMEET', 'SINGH']
+  const nameParts = ['AVJEET', 'SINGH']
 
   const socialLinks = [
     {
@@ -255,8 +255,8 @@ export default function Hero() {
         <PhoneNumber phone={personalInfo.phone} />
 
         <motion.a
-          href="/resume/ResumeGerman.pdf"
-          download="Parmeet_Singh_Resume.pdf"
+          href="/resume/Avjeet_Resume_2025.pdf"
+          download="Avjeet_Singh_Resume.pdf"
           className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold transition-all duration-200 shadow-lg shadow-indigo-600/25"
           whileHover={{ y: -2, scale: 1.02 }}
           whileTap={{ scale: 0.97 }}

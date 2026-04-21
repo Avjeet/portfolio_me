@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, useInView } from 'framer-motion'
-import { GraduationCap, Award, CalendarDays } from 'lucide-react'
+import { Award, CalendarDays } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { Education as EducationType } from '@/lib/data'
 
@@ -66,60 +66,49 @@ export default function Education() {
                 className="relative sm:pl-16"
               >
                 {/* Timeline dot */}
-                <div className="absolute left-0 top-6 hidden sm:block">
+                <div className="absolute left-5 top-6 -translate-x-1/2 hidden sm:block">
                   <div className="timeline-dot" />
                 </div>
 
                 {/* Card */}
-                <div className="group card p-6 sm:p-8 overflow-hidden">
-                  {/* Gradient left accent */}
+                <div className="group relative card p-6 sm:p-8 overflow-hidden">
+                  {/* Gradient accent — left border */}
                   <div
-                    className={`absolute left-0 top-0 bottom-0 w-[3px] rounded-l-2xl bg-gradient-to-b ${edu.color} opacity-60 group-hover:opacity-100 transition-opacity`}
+                    className={`absolute left-0 top-0 bottom-0 w-[3px] rounded-l-2xl bg-gradient-to-b ${edu.color} opacity-70 group-hover:opacity-100 transition-opacity`}
                   />
 
-                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-                    <div className="flex items-start gap-4">
-                      {/* Icon */}
-                      <div
-                        className={`w-11 h-11 rounded-xl bg-gradient-to-br ${edu.color} flex items-center justify-center shadow-lg flex-shrink-0`}
+                  {/* Header row */}
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-2">
+                    <div>
+                      <h3
+                        className="text-xl sm:text-2xl font-bold text-white mb-1.5"
+                        style={{ fontFamily: 'var(--font-space, system-ui)' }}
                       >
-                        {index === 0 ? (
-                          <GraduationCap size={20} className="text-white" />
-                        ) : (
-                          <Award size={20} className="text-white" />
-                        )}
-                      </div>
-
-                      <div>
-                        <h3
-                          className="text-base sm:text-lg font-bold text-white mb-1 leading-tight"
-                          style={{ fontFamily: 'var(--font-space, system-ui)' }}
-                        >
-                          {edu.institution}
-                        </h3>
-                        <p className="text-indigo-300 font-medium text-sm mb-2">
-                          {edu.degree}
-                        </p>
-                        <div className="flex items-center gap-2 text-xs text-gray-600">
-                          <CalendarDays size={11} />
-                          {edu.period}
+                        {edu.institution}
+                      </h3>
+                      <p className="text-indigo-300 font-medium text-sm mb-2">
+                        {edu.degree}
+                      </p>
+                      {edu.achievement ? (
+                        <div className="flex items-center gap-1 text-xs text-gray-600">
+                          <Award size={11} />
+                          {edu.achievement}
                         </div>
-                      </div>
+                      ) : null}
                     </div>
-
-                    {/* Achievement badge */}
-                    {edu.achievement && (
-                      <span
-                        className={`self-start inline-block px-4 py-1.5 rounded-full bg-gradient-to-r ${edu.color} text-white text-xs font-semibold shadow-md flex-shrink-0`}
-                      >
-                        {edu.achievement}
-                      </span>
-                    )}
+                    <span
+                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r ${edu.color} text-white text-xs font-semibold whitespace-nowrap self-start shadow-md`}
+                    >
+                      <CalendarDays size={11} />
+                      {edu.period}
+                    </span>
                   </div>
 
-                  {/* Hover glow */}
-                  <div
-                    className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${edu.color} opacity-0 group-hover:opacity-[0.04] transition-opacity duration-400 pointer-events-none`}
+                  {/* Hover glow overlay */}
+                  <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none"
+                    style={{
+                      background: 'radial-gradient(ellipse at top left, rgba(99,102,241,0.04) 0%, transparent 70%)',
+                    }}
                   />
                 </div>
               </motion.div>

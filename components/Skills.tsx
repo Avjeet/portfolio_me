@@ -1,31 +1,31 @@
 'use client'
 
 import { motion, useInView } from 'framer-motion'
-import { Code, Database, Cloud, Layers } from 'lucide-react'
+import { Code, Smartphone, Layers, Bot } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { Skills as SkillsType } from '@/lib/data'
 import InterestsSection from './InterestsSection'
 
 const iconMap: Record<string, typeof Code> = {
   Languages: Code,
-  Technologies: Database,
-  'Web Dev Tools': Cloud,
-  Frameworks: Layers,
+  'Android & Mobile': Smartphone,
+  Architecture: Layers,
+  'AI & Dev Tools': Bot,
 }
 
 const categoryAccents: Record<string, string> = {
   Languages: 'from-blue-500 to-cyan-500',
-  Technologies: 'from-violet-500 to-pink-500',
-  'Web Dev Tools': 'from-emerald-500 to-teal-500',
-  Frameworks: 'from-orange-500 to-amber-500',
+  'Android & Mobile': 'from-violet-500 to-purple-500',
+  Architecture: 'from-emerald-500 to-teal-500',
+  'AI & Dev Tools': 'from-orange-500 to-amber-500',
 }
 
 export default function Skills() {
   const [skills, setSkills] = useState<SkillsType>({
     languages: { title: 'Languages', skills: [], color: 'from-blue-500 to-cyan-500' },
-    technologies: { title: 'Technologies', skills: [], color: 'from-purple-500 to-pink-500' },
-    webDevTools: { title: 'Web Dev Tools', skills: [], color: 'from-green-500 to-emerald-500' },
-    frameworks: { title: 'Frameworks', skills: [], color: 'from-orange-500 to-red-500' },
+    technologies: { title: 'Android & Mobile', skills: [], color: 'from-violet-500 to-purple-500' },
+    webDevTools: { title: 'Architecture', skills: [], color: 'from-emerald-500 to-teal-500' },
+    frameworks: { title: 'AI & Dev Tools', skills: [], color: 'from-orange-500 to-amber-500' },
   })
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-80px' })

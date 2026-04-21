@@ -106,7 +106,24 @@ function ProjectCard({ project, index, isInView }: {
           </div>
 
           {/* CTA */}
-          {project.link ? (
+          {project.links && project.links.length > 0 ? (
+            <div className="flex gap-2">
+              {project.links.map((l) => (
+                <motion.a
+                  key={l.url}
+                  href={l.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-indigo-600/80 hover:bg-indigo-600 text-white text-xs font-semibold transition-all duration-200 border border-indigo-500/40"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  <ExternalLink size={12} />
+                  {l.label}
+                </motion.a>
+              ))}
+            </div>
+          ) : project.link ? (
             <motion.a
               href={project.link}
               target="_blank"
@@ -190,7 +207,7 @@ export default function Projects() {
           className="text-center"
         >
           <motion.a
-            href="https://github.com/parmeet10"
+            href="https://github.com/Avjeet"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2.5 px-7 py-3.5 glass rounded-full border border-white/10 text-gray-300 text-sm font-medium hover:border-indigo-500/35 hover:text-white transition-all duration-200"

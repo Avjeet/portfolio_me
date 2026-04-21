@@ -14,9 +14,9 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  title: 'Parmeet Singh — Software Development Engineer',
+  title: 'Avjeet Singh — Multiplatform Mobile Architect | Android Engineer',
   description:
-    'Portfolio of Parmeet Singh — SDE with 3+ years building distributed systems, XR pipelines, and full-stack applications.',
+    'Portfolio of Avjeet Singh — Android & KMP/CMP Engineer with 6+ years building mobile apps, GSoC Mentor, and Hackathon Winner.',
 }
 
 export default function RootLayout({

@@ -6,9 +6,9 @@ import { useEffect, useState } from 'react'
 
 export default function Footer() {
   const [personalInfo, setPersonalInfo] = useState({
-    email: 'sparmeet162000@gmail.com',
-    github: 'https://github.com/parmeet10',
-    linkedin: 'https://linkedin.com/in/parmeet10',
+    email: 'singh.avjeet02@gmail.com',
+    github: 'https://github.com/Avjeet',
+    linkedin: 'https://www.linkedin.com/in/avjeet-singh-73572a138',
   })
 
   useEffect(() => {
@@ -53,10 +53,10 @@ export default function Footer() {
               className="text-xl font-black gradient-text mb-0.5"
               style={{ fontFamily: 'var(--font-space, system-ui)' }}
             >
-              Parmeet Singh
+              Avjeet Singh
             </h3>
             <p className="text-gray-600 text-xs">
-              Software Development Engineer
+              Android & Multiplatform Mobile Architect
             </p>
           </motion.div>
 
@@ -105,7 +105,7 @@ export default function Footer() {
           viewport={{ once: true }}
           className="mt-8 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-gray-700 font-mono"
         >
-          <span>© {new Date().getFullYear()} Parmeet Singh</span>
+          <span>© {new Date().getFullYear()} Avjeet Singh</span>
           <span>Built with Next.js · Tailwind · Framer Motion</span>
         </motion.div>
       </div>

@@ -9,9 +9,9 @@ const navItems = [
   { name: 'About', href: '#about' },
   { name: 'Experience', href: '#experience' },
   { name: 'Projects', href: '#projects' },
-  { name: 'Skills', href: '#skills' },
   { name: 'Education', href: '#education' },
-  { name: 'Blogs', href: '#blogs' },
+  { name: 'Skills', href: '#skills' },
+  { name: 'Highlights', href: '#highlights' },
 ]
 
 export default function Navigation() {
@@ -66,7 +66,7 @@ export default function Navigation() {
               className="text-xl font-black tracking-tight gradient-text"
               style={{ fontFamily: 'var(--font-space, system-ui)' }}
             >
-              PS
+              AS
             </span>
             <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-500 to-violet-500 group-hover:w-full transition-all duration-300 rounded-full" />
           </motion.a>
@@ -104,7 +104,7 @@ export default function Navigation() {
           {/* CTA + Mobile toggle */}
           <div className="flex items-center gap-3">
             <motion.a
-              href="https://calendly.com/sparmeet162000/30min"
+              href="https://calendly.com/singh-avjeet02"
               target="_blank"
               rel="noopener noreferrer"
               className="hidden md:flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold transition-all duration-200 shadow-lg shadow-indigo-600/20"
@@ -158,7 +158,7 @@ export default function Navigation() {
             ))}
             <div className="px-4 py-3 border-t border-white/8">
               <a
-                href="https://calendly.com/sparmeet162000/30min"
+                href="https://calendly.com/singh-avjeet02"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-indigo-600 text-white text-sm font-semibold"

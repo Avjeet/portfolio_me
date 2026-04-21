@@ -31,6 +31,7 @@ export interface Project {
   features: string[]
   technologies: string[]
   link: string
+  links?: { label: string; url: string }[]
   color: string
 }
 
@@ -56,12 +57,23 @@ export interface Education {
   color: string
 }
 
+export interface Achievement {
+  id: string
+  title: string
+  organization: string
+  date: string
+  description: string
+  image: string
+  color: string
+}
+
 export interface PortfolioData {
   personalInfo: PersonalInfo
   experiences: Experience[]
   projects: Project[]
   skills: Skills
   education: Education[]
+  achievements: Achievement[]
   interests: string
 }
 

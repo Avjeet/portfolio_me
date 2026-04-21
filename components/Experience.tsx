@@ -71,7 +71,7 @@ export default function Experience() {
                 className="relative sm:pl-16"
               >
                 {/* Timeline dot */}
-                <div className="absolute left-0 top-6 hidden sm:block">
+                <div className="absolute left-5 top-6 -translate-x-1/2 hidden sm:block">
                   <div className="timeline-dot" />
                 </div>
 

@@ -6,7 +6,7 @@ import { CalendarDays } from 'lucide-react'
 export default function BookMeetingButton() {
   return (
     <motion.a
-      href="https://calendly.com/sparmeet162000/30min"
+      href="https://calendly.com/singh-avjeet02"
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Book a 1:1 meeting"

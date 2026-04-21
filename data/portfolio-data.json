@@ -1,53 +1,58 @@
 {
   "personalInfo": {
-    "name": "Parmeet Singh",
-    "title": "Software Development Engineer",
-    "description": "3+ years of experience building scalable applications and innovative solutions",
-    "email": "sparmeet162000@gmail.com",
-    "phone": ["+49 15567138299"],
-    "github": "https://github.com/parmeet10",
-    "linkedin": "https://linkedin.com/in/parmeet10"
+    "name": "Avjeet Singh",
+    "title": "Multiplatform Mobile Architect | Android Engineer",
+    "description": "6+ years building Android, KMP & CMP applications. GSoC Mentor, Hackathon Winner.",
+    "email": "singh.avjeet02@gmail.com",
+    "phone": ["+91 8527949323"],
+    "github": "https://github.com/Avjeet",
+    "linkedin": "https://www.linkedin.com/in/avjeet-singh-73572a138"
   },
   "experiences": [
     {
       "id": "1",
-      "company": "Jio",
-      "position": "Software Development Engineer - II",
-      "location": "Mumbai, Maharashtra",
-      "period": "Apr 2025 - Oct 2025",
+      "company": "PhonePe, Pincode",
+      "position": "Software Engineer - Android",
+      "location": "Bangalore, India",
+      "period": "Apr 2024 - Present",
       "description": [
-        "Contributing to the development of Jio Frames, a next-gen mixed-reality wearable product similar to Apple Vision Pro, focused on immersive spatial computing experiences.",
-        "Building real-time speech-to-text (STT) and text-to-speech (TTS) pipelines to enable voice interaction in XR environments.",
-        "Setting up backend infrastructure using Node.js, gRPC, and WebSockets for low-latency, real-time audio communication.",
-        "Collaborating with AI and hardware teams to integrate voice-driven features into augmented reality use cases."
+        "Leveraged Kotlin & Compose Multiplatform to build cross-platform features for Desktop and iOS apps, accelerating desktop POS platform support by migrating from an Android-native mono repo to a unified multiplatform architecture.",
+        "Customized the open-source Jitsi React Web App to enable remote control support on Android without extra permissions; developed a Jitsi-based Android client and SDK (Pinpoint AI Agent Debugger Tool) that integrates with any app, providing remote control and logging functionality — won Pincode Hackathon 2025.",
+        "Delivered secure workforce management features including check-in/out flows, background geofencing, and spoofing detection.",
+        "Led staff management module design integrating role-based access, onboarding workflows, and contact synchronization, enabling store owners to manage 10,000+ staff members efficiently and improving operational productivity by 30%.",
+        "Developed QR code generation & printing feature by building a dynamic form-driven QR label generator with in-app printing support.",
+        "Developed a self-onboarding flow for stores, reducing onboarding time by 40% and increasing store listings on the platform by 25% within the first 3 months of launch."
       ],
       "color": "from-blue-500 to-cyan-500"
     },
     {
       "id": "2",
-      "company": "WeDevx.co",
-      "position": "Software Development Engineer",
-      "location": "Bishkek, Kyrgyzstan",
-      "period": "Mar 2023 - Aug 2024",
+      "company": "Rooter Sports Technologies",
+      "position": "Software Engineer / EM - Android",
+      "location": "Delhi, India",
+      "period": "May 2019 - Apr 2024",
       "description": [
-        "Implemented health checks and monitoring systems, resulting in a 99.9% increase in up-time.",
-        "Implemented tools such as Husky and established CI/CD processes to streamline pull request reviews and minimize manual effort.",
-        "Engineered a subscription management system with Stripe, automating payment processing, subscription renewals, and cancellations, leading to increased revenue and enhanced user satisfaction.",
-        "Deployed code execution engines on servers instead of relying on a managed service, reducing operational costs to zero while ensuring high availability and seamless functionality.",
-        "Developed a custom rate-limiting and bot detection algorithm to block spam signups and mitigate botnet attacks without using paid services, ensuring platform security and performance."
+        "Assembled and mentored a high-performing team of 8 Android engineers to develop an app that achieved 50M+ downloads, surpassing industry standards with a crash rate of only 0.2%.",
+        "Transformed user experience by innovating the video playback module — merging live game streaming, playback features, pre-roll ads, and live chat capabilities using sockets — resulting in a 30% increase in user engagement and ad revenue.",
+        "Implemented a robust monetization strategy by integrating Google Ad SDK, custom brand affiliations, and an e-commerce marketplace with a secure payment gateway, generating a revenue stream surpassing millions of dollars.",
+        "Spearheaded the development of Rooter Reels, driving a 40% surge in average user engagement with short video content and amplifying media consumption in new users funnel to 90%.",
+        "Innovated the Rooter Tasks, Rewards and Coupons feature, introducing user economy and facilitating brand integrations that enhanced user stickiness.",
+        "Conceptualized and deployed a diverse suite of user-generated content tools for videos, images, and polls, resulting in a 50% surge in post creation by new users.",
+        "Crafted a mobile app roadmap enabling the development team to launch 2-3 new releases every month with major updates."
       ],
       "color": "from-purple-500 to-pink-500"
     },
     {
       "id": "3",
-      "company": "Xane.ai",
-      "position": "Backend Developer",
-      "location": "Haryana, Gurugram",
-      "period": "Jun 2022 - Feb 2023",
+      "company": "FOSSASIA",
+      "position": "Google Summer of Code Intern",
+      "location": "New Delhi, India",
+      "period": "Feb 2018 - May 2018",
       "description": [
-        "Developed application programming interfaces for seamless communication with and storage of predictions from machine learning servers.",
-        "Architected and optimized databases to store and process data from OMNX servers, enabling asynchronous handling of large number of files and reducing latency.",
-        "Generation of comma-separated files from multiple records to enhance user experience and solved complex technical challenges to create a robust and fault-tolerant back-end infrastructure."
+        "Worked on the Android app for the open-source platform Pocket Science Lab, designing and implementing user-friendly, intuitive app interfaces in collaboration with designers and product managers.",
+        "Created robust APIs with RESTful services to integrate mobile apps and backend systems.",
+        "Authored weekly blog posts reaching an audience of 20K+ readers on FOSSASIA's website.",
+        "Later returned as GSoC Mentor (2019-2020), leading design and implementation of app interfaces and reducing development time by 35% through better API architecture."
       ],
       "color": "from-green-500 to-emerald-500"
     }
@@ -55,146 +60,182 @@
   "projects": [
     {
       "id": "1",
-      "title": "SolveWatch AI",
-      "type": "Desktop Application",
-      "description": "AI-powered interview assistant desktop app that captures screenshots, extracts text via OCR, and generates solutions using a multi-provider AI failover system",
+      "title": "Pinpoint AI Agent Debugger Tool",
+      "type": "Android SDK / Tool",
+      "description": "A Jitsi-based Android SDK that enables remote control and logging for any Android app — built and open-sourced at PhonePe; winner of Pincode Hackathon 2025.",
       "features": [
-        "Built a real-time desktop application that captures screenshots during coding interviews, extracts text via OCR, and generates AI-powered solutions using a multi-provider failover system (OpenAI GPT-4o, Groq LLaMA-70B, Google Gemini) with automatic provider health tracking and retry logic",
-        "Designed a dual-modal input pipeline supporting both visual input (screenshot OCR) and audio input (real-time transcription via WebSocket), enabling seamless problem ingestion in live interview scenarios",
-        "Implemented 5 specialized prompt templates (debug, theory, coding, transcription, context) with a hot-swappable prompt system allowing the same problem to be re-analyzed from different angles without re-processing",
-        "Built a real-time WebSocket event streaming architecture with per-connection state isolation, enabling fine-grained UI feedback across 13+ events (OCR start/complete, AI processing, errors)",
-        "Packaged as an Electron desktop app with a HUD overlay (Cmd+Shift+H) and native macOS integration (screenshot capture, Retina scaling, mouse tracking, clipboard access)"
+        "Customized the open-source Jitsi React Web App to enable remote control support on Android without requiring extra permissions",
+        "Developed a drop-in Android client and SDK that integrates with any Android app, providing full remote control and session logging functionality",
+        "Won the Pincode Hackathon 2025 — deployed internally to accelerate AI agent debugging workflows across teams"
       ],
-      "technologies": ["Node.js", "Express", "Electron", "Socket.io", "OpenAI", "Groq", "Gemini", "Tesseract.js", "Sharp"],
-      "link": "https://solvewatchai.vercel.app",
+      "technologies": ["Kotlin", "Android", "Jitsi", "React", "WebRTC", "SDK"],
+      "link": "",
       "color": "from-violet-500 to-purple-500"
     },
     {
       "id": "2",
-      "title": "FitXperts",
-      "type": "Full-Stack Web App",
-      "description": "A full-stack fitness tracking platform where users can log exercise sessions, build custom workout plans, and visualize fitness progress over time",
+      "title": "Rooter App",
+      "type": "Android Application",
+      "description": "India's premier gaming and esports platform — 50M+ downloads, live game streaming, short video content, and an in-app marketplace, all on a 0.2% crash rate.",
       "features": [
-        "Built a REST API with Express.js and Supabase (PostgreSQL + Row-Level Security for data isolation)",
-        "Implemented an AI-powered fitness recommendation engine using the OpenAI API",
-        "Developed an analytics dashboard with interactive charts (Recharts) showing strength progression, volume trends, and workout history",
-        "Added a social/friends feature for sharing progress and integrated a TTL in-memory caching layer to reduce database load on analytics endpoints",
-        "Configured drag-and-drop exercise ordering (dnd-kit) and form management (React Hook Form); deployed on Vercel with separate backend and frontend services"
+        "Built a real-time video playback module merging live game streaming, pre-roll ads, and live chat via WebSockets — driving a 30% lift in user engagement",
+        "Spearheaded Rooter Reels (short video), UGC tools (videos, images, polls), and a Tasks/Rewards/Coupons economy — boosting new-user media consumption to 90%",
+        "Integrated Google Ad SDK, custom brand affiliations, and a secure e-commerce payment gateway generating millions in revenue; maintained a 0.2% crash rate across 50M+ installs"
       ],
-      "technologies": ["Next.js", "React", "Node.js", "Express", "Supabase", "PostgreSQL", "Tailwind CSS", "Recharts", "Zustand", "OpenAI API"],
-      "link": "https://fitxperts-z1iq.vercel.app",
-      "color": "from-green-500 to-teal-500"
+      "technologies": ["Kotlin", "Java", "Android", "Firebase", "WebSockets", "Coroutines", "RxJava"],
+      "link": "",
+      "links": [
+        { "label": "Play Store", "url": "https://play.google.com/store/apps/details?id=com.threesixteen.app&hl=en_IN&gl=US" },
+        { "label": "Website", "url": "https://www.rooter.gg/" }
+      ],
+      "color": "from-blue-500 to-cyan-500"
     },
     {
       "id": "3",
-      "title": "Curl-Logger",
-      "type": "NPM Package",
-      "description": "A npm package to log curl-request on the console",
+      "title": "Pocket Science Lab",
+      "type": "Open Source Android App",
+      "description": "FOSSASIA's open-source hardware science lab companion app for Android — contributed as a Google Summer of Code intern in 2018.",
       "features": [
-        "Middleware for every request to log all the request metadata",
-        "Ability to write Comma separated files on the server that would be appended to every request in order to have a complete list of curl requests to avoid hassle",
-        "Reduced debugging time for API-related issues by creating a developer-friendly solution to trace HTTP requests with minimal overhead"
+        "Designed and implemented user-friendly app interfaces for the Pocket Science Lab hardware platform in collaboration with designers and product managers",
+        "Built RESTful API integrations connecting the Android app with backend lab data systems",
+        "Authored weekly development blog posts that reached 20K+ readers on FOSSASIA's platform, documenting progress and promoting open-source contribution"
       ],
-      "technologies": ["Express", "Node.js"],
-      "link": "https://www.npmjs.com/package/curl-logger",
-      "color": "from-yellow-500 to-orange-500"
+      "technologies": ["Java", "Android", "REST APIs", "Open Source"],
+      "link": "https://github.com/fossasia/pslab-android",
+      "color": "from-green-500 to-emerald-500"
     }
   ],
   "skills": {
     "languages": {
       "title": "Languages",
-      "skills": ["JavaScript", "TypeScript", "C/C++", "Python"],
+      "skills": ["Kotlin", "Java", "JavaScript", "TypeScript", "Python"],
       "color": "from-blue-500 to-cyan-500"
     },
     "technologies": {
-      "title": "Technologies",
+      "title": "Android & Mobile",
       "skills": [
-        "Node.js",
-        "Linux",
-        "ReactJs",
-        "Redux",
-        "Socket.io",
-        "Sequelize",
-        "Mongoose",
-        "MySQL",
-        "PostgreSQL",
-        "Grafana",
-        "Redis",
-        "MVC",
-        "Shell",
-        "API",
-        "Data Structures and Algorithms",
-        "Object-Oriented Programming",
-        "gRPC",
-        "OpenTelemetry",
-        "microservices",
-        "RESTful APIs",
+        "Android SDK",
+        "Jetpack Compose",
+        "Kotlin Multiplatform",
+        "Compose Multiplatform",
+        "XML Layouts",
+        "Material Design",
+        "Firebase",
+        "Coroutines",
+        "Flow",
+        "RxJava",
+        "Retrofit",
+        "OkHttp",
+        "WebSockets",
+        "REST APIs",
         "GraphQL",
-        "Docker",
-        "Kubernetes",
-        "AWS",
-        "Azure",
-        "Jira",
-        "Azure Devops"
+        "Jetpack Libraries",
+        "Jitsi SDK",
+        "WebRTC"
       ],
-      "color": "from-purple-500 to-pink-500"
+      "color": "from-violet-500 to-purple-500"
     },
     "webDevTools": {
-      "title": "Web Dev Tools",
+      "title": "Architecture",
       "skills": [
-        "VScode",
-        "Git",
-        "Github",
-        "AWS",
-        "Cloudflare",
-        "Nginx",
-        "GCP",
-        "Kubernetes",
-        "Docker",
-        "Grafana",
-        "Datadog",
-        "Jira",
-        "Azure Devops"
+        "MVVM",
+        "MVI",
+        "Clean Architecture",
+        "SOLID Principles",
+        "Design Patterns",
+        "Modularization",
+        "Hilt",
+        "Koin",
+        "Dagger",
+        "Unit Testing",
+        "Espresso",
+        "CI/CD",
+        "Gradle",
+        "ProGuard"
       ],
-      "color": "from-green-500 to-emerald-500"
+      "color": "from-emerald-500 to-teal-500"
     },
     "frameworks": {
-      "title": "Frameworks",
-      "skills": ["Express", "Fastify", "Nest.js", "Loopback", "Next.js", "React.js"],
-      "color": "from-orange-500 to-red-500"
+      "title": "AI & Dev Tools",
+      "skills": [
+        "Claude Code",
+        "GitHub Copilot",
+        "Cursor",
+        "Google Antigravity",
+        "Gemini",
+        "Android Studio",
+        "VS Code",
+        "Git",
+        "GitHub",
+        "Jira",
+        "Figma",
+        "Postman",
+        "Charles Proxy",
+        "LeakCanary"
+      ],
+      "color": "from-orange-500 to-amber-500"
     }
   },
   "education": [
     {
       "id": "1",
-      "institution": "Friedrich-Alexander-Universität Erlangen-Nürnberg (FAU), Germany",
-      "degree": "Master of Science in Computer Science",
-      "period": "2025 - Present",
-      "achievement": "",
-      "color": "from-cyan-500 to-blue-500"
-    },
-    {
-      "id": "2",
       "institution": "Guru Gobind Singh Indraprastha University, Delhi",
-      "degree": "Bachelor of Technology in Information Technology",
-      "period": "2018-22",
-      "achievement": "CGPA: 8.7",
+      "degree": "Bachelor of Technology, Computer Science & Engineering",
+      "period": "2015 - 2019",
+      "achievement": "",
       "color": "from-blue-500 to-purple-500"
     },
     {
-      "id": "3",
-      "institution": "Dl Dav Model School, Delhi",
+      "id": "2",
+      "institution": "Guru Nanak Public School, Punjabi Bagh",
       "degree": "Central Board of Secondary Education (C.B.S.E)",
-      "period": "2018",
-      "achievement": "Percentage: 70",
+      "period": "2015",
+      "achievement": "",
       "color": "from-purple-500 to-pink-500"
     }
   ],
-  "interests": "Passionate about building scalable systems, exploring new technologies, and solving complex problems",
+  "achievements": [
+    {
+      "id": "1",
+      "title": "Pincode Hackathon 2025 Winner",
+      "organization": "PhonePe",
+      "date": "2025",
+      "description": "Built Pinpoint AI Agent Debugger Tool — a Jitsi-based Android SDK enabling remote control and logging for any Android app.",
+      "image": "/achievements/hackathon-2025.jpg",
+      "color": "from-yellow-500 to-orange-500"
+    },
+    {
+      "id": "2",
+      "title": "Smart India Hackathon Winner",
+      "organization": "Govt. of India",
+      "date": "2018",
+      "description": "Won Smart India Hackathon 2018 — India's largest hackathon organized by MHRD. Team 'The Aimers' secured ₹75,000 prize at the Grand Finale.",
+      "image": "/achievements/sih-2018.jpg",
+      "color": "from-green-500 to-emerald-500"
+    },
+    {
+      "id": "3",
+      "title": "Google Summer of Code Mentor",
+      "organization": "FOSSASIA",
+      "date": "2019 – 2020",
+      "description": "Mentored GSoC contributors on the Pocket Science Lab Android app at FOSSASIA. Previously participated as a GSoC intern in 2018.",
+      "image": "/achievements/fossasia-event.jpg",
+      "color": "from-blue-500 to-cyan-500"
+    },
+    {
+      "id": "4",
+      "title": "FOSSASIA JugaadFest Speaker",
+      "organization": "FOSSASIA",
+      "date": "2019",
+      "description": "Spoke and mentored participants at JugaadFest by FOSSASIA — an open-source and tech innovation event held in India.",
+      "image": "/achievements/fossasia-talk.jpg",
+      "color": "from-red-500 to-pink-500"
+    }
+  ],
+  "interests": "Passionate about building high-quality mobile experiences, cross-platform architecture with KMP/CMP, open source contribution, and mentoring the next generation of developers.",
   "blog": {
-    "mediumUrl": "https://medium.com/@sparmeet162000",
-    "enabled": true,
+    "mediumUrl": "",
+    "enabled": false,
     "maxPosts": 6
   }
 }
-

@@ -16,26 +16,26 @@ import {
 const stats = [
   {
     label: 'Years Experience',
-    value: '3+',
+    value: '6+',
     icon: Briefcase,
     gradient: 'from-violet-500 to-indigo-500',
+  },
+  {
+    label: 'App Downloads',
+    value: '50M+',
+    icon: Zap,
+    gradient: 'from-pink-500 to-rose-500',
   },
   {
     label: 'Companies',
     value: '3',
     icon: Code2,
-    gradient: 'from-pink-500 to-rose-500',
-  },
-  {
-    label: 'Countries',
-    value: '3',
-    icon: MapPin,
     gradient: 'from-cyan-500 to-blue-500',
   },
   {
     label: 'Projects Shipped',
     value: '10+',
-    icon: Zap,
+    icon: MapPin,
     gradient: 'from-amber-500 to-orange-500',
   },
 ]
@@ -43,28 +43,28 @@ const stats = [
 const highlights = [
   {
     icon: GraduationCap,
-    text: 'MS CS @ FAU Erlangen-Nürnberg, Germany',
+    text: 'Software Engineer @ PhonePe, Pincode',
     color: 'text-cyan-400',
     bg: 'bg-cyan-500/8',
     border: 'border-cyan-500/15',
   },
   {
     icon: Briefcase,
-    text: 'SDE-II @ Jio — XR & Spatial Computing',
+    text: 'Kotlin Multiplatform & Android Expert',
     color: 'text-violet-400',
     bg: 'bg-violet-500/8',
     border: 'border-violet-500/15',
   },
   {
     icon: MapPin,
-    text: 'Based in Erlangen, Germany',
+    text: 'Based in Bengaluru, India',
     color: 'text-pink-400',
     bg: 'bg-pink-500/8',
     border: 'border-pink-500/15',
   },
   {
     icon: Calendar,
-    text: '3+ years in production backend systems',
+    text: '6+ years in Android development',
     color: 'text-emerald-400',
     bg: 'bg-emerald-500/8',
     border: 'border-emerald-500/15',
@@ -128,15 +128,15 @@ export default function AboutMe() {
               <div className="relative w-72 h-80 sm:w-80 sm:h-96 lg:w-[360px] lg:h-[460px] rounded-2xl overflow-hidden bg-gray-950 border border-white/8">
                 {!imageError ? (
                   <img
-                    src="/profile.JPG"
-                    alt="Parmeet Singh"
+                    src="/profile.png"
+                    alt="Avjeet Singh"
                     onError={() => setImageError(true)}
                     className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                   />
                 ) : (
                   <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-indigo-900/40 to-violet-900/40">
                     <div className="w-20 h-20 rounded-full bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center mb-3 text-2xl font-black text-white">
-                      PS
+                      AS
                     </div>
                     <p className="text-gray-500 text-xs px-6 text-center">
                       Drop profile.JPG in /public to show your photo
@@ -148,32 +148,15 @@ export default function AboutMe() {
                 <div className="absolute bottom-4 left-4 right-4">
                   <div className="glass rounded-xl px-4 py-2.5 border border-white/10">
                     <p className="text-white font-semibold text-sm leading-none mb-0.5">
-                      Parmeet Singh
+                      Avjeet Singh
                     </p>
                     <p className="text-indigo-300 text-xs">
-                      Software Development Engineer
+                      Experienced Multiplatform Mobile Architect
                     </p>
                   </div>
                 </div>
               </div>
 
-              {/* Floating badges */}
-              <motion.div
-                className="absolute -top-4 -right-4 glass rounded-full px-3 py-1.5 border border-indigo-500/25 flex items-center gap-1.5 shadow-xl z-10 text-xs text-white font-medium"
-                animate={{ y: [0, -5, 0] }}
-                transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
-              >
-                <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
-                Open to work
-              </motion.div>
-
-              <motion.div
-                className="absolute -bottom-4 -left-4 glass rounded-xl px-3 py-1.5 border border-violet-500/25 shadow-xl z-10 text-xs text-violet-300 font-medium"
-                animate={{ y: [0, 5, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
-              >
-                🎓 MS @ FAU Germany
-              </motion.div>
             </div>
           </motion.div>
 
@@ -186,18 +169,18 @@ export default function AboutMe() {
           >
             <div className="space-y-4">
               <p className="text-lg sm:text-xl text-gray-200 leading-relaxed font-light">
-                I&apos;m a Software Development Engineer with a passion for
-                building systems that scale. From crafting real-time XR voice
-                pipelines at Jio to architecting full-stack platforms from
-                scratch — I thrive at the intersection of backend engineering
-                and innovative product thinking.
+                I&apos;m an experienced Android and Multiplatform Mobile
+                Architect with 6+ years building high-quality apps. From
+                developing apps with 50M+ downloads at Rooter to building
+                cross-platform KMP/CMP solutions at PhonePe — I thrive at the
+                intersection of mobile engineering and innovative product
+                delivery.
               </p>
               <p className="text-base text-gray-500 leading-relaxed">
-                Currently pursuing my Master&apos;s in CS at
-                Friedrich-Alexander-Universität Erlangen-Nürnberg, Germany. I
-                specialize in Node.js, TypeScript, and distributed systems —
-                with hands-on experience in gRPC, WebSockets, microservices,
-                and cloud infrastructure.
+                Currently working as a Software Engineer at PhonePe, Pincode,
+                specializing in Kotlin Multiplatform and Compose Multiplatform.
+                I&apos;m also a Google Summer of Code mentor and winner of the
+                Pincode Hackathon 2025 for the Pinpoint AI Agent Debugger Tool.
               </p>
             </div>
 
@@ -233,8 +216,8 @@ export default function AboutMe() {
                 <ArrowRight size={15} />
               </motion.a>
               <motion.a
-                href="/resume/ResumeGerman.pdf"
-                download="Parmeet_Singh_Resume.pdf"
+                href="/resume/Avjeet_Resume_2025.pdf"
+                download="Avjeet_Singh_Resume.pdf"
                 className="flex items-center gap-2 px-6 py-2.5 rounded-full glass border border-white/12 text-white font-semibold text-sm hover:border-white/25 hover:bg-white/8 transition-all duration-200"
                 whileHover={{ scale: 1.04, y: -1 }}
                 whileTap={{ scale: 0.97 }}

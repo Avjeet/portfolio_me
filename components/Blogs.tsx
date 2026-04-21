@@ -165,7 +165,7 @@ export default function Blogs() {
             className="text-center mt-12"
           >
             <motion.a
-              href="https://medium.com/@sparmeet162000"
+              href="https://www.linkedin.com/in/avjeet-singh-73572a138"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2.5 px-7 py-3.5 glass rounded-full border border-white/10 text-gray-300 text-sm font-medium hover:border-orange-500/30 hover:text-white transition-all duration-200"
