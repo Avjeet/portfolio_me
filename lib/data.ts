@@ -67,6 +67,16 @@ export interface Achievement {
   color: string
 }
 
+export interface TimelineEvent {
+  id: string
+  year: number
+  month: number
+  label: string
+  sublabel: string
+  type: 'education' | 'work' | 'achievement'
+  icon: string
+}
+
 export interface PortfolioData {
   personalInfo: PersonalInfo
   experiences: Experience[]
@@ -74,6 +84,7 @@ export interface PortfolioData {
   skills: Skills
   education: Education[]
   achievements: Achievement[]
+  timelineEvents: TimelineEvent[]
   interests: string
 }
 

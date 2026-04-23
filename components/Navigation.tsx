@@ -7,6 +7,7 @@ import { Menu, X } from 'lucide-react'
 const navItems = [
   { name: 'Home', href: '#home' },
   { name: 'About', href: '#about' },
+  { name: 'Timeline', href: '#timeline' },
   { name: 'Experience', href: '#experience' },
   { name: 'Projects', href: '#projects' },
   { name: 'Education', href: '#education' },
@@ -112,7 +113,7 @@ export default function Navigation() {
               whileTap={{ scale: 0.97 }}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              Hire Me
+              Book 1:1
             </motion.a>
 
             <button

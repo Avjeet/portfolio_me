@@ -232,6 +232,22 @@
       "color": "from-red-500 to-pink-500"
     }
   ],
+  "timelineEvents": [
+    { "id": "1", "year": 2015, "month": 5, "label": "Passed 12th (CBSE)", "sublabel": "Guru Nanak Public School", "type": "education", "icon": "🎓" },
+    { "id": "2", "year": 2015, "month": 8, "label": "B.Tech Begins", "sublabel": "GGSIPU, Delhi", "type": "education", "icon": "🏫" },
+    { "id": "3", "year": 2017, "month": 3, "label": "Intern — Enigma Business Solutions", "sublabel": "Android Intern", "type": "work", "icon": "💼" },
+    { "id": "4", "year": 2018, "month": 2, "label": "GSoC Intern", "sublabel": "FOSSASIA", "type": "achievement", "icon": "🌟" },
+    { "id": "5", "year": 2018, "month": 8, "label": "Smart India Hackathon Winner", "sublabel": "Govt. of India", "type": "achievement", "icon": "🏆" },
+    { "id": "5b", "year": 2018, "month": 10, "label": "Speaker at JugaadFest", "sublabel": "JugaadFest, BVRIT", "type": "achievement", "icon": "🎤" },
+    { "id": "6", "year": 2019, "month": 5, "label": "B.Tech Graduated", "sublabel": "GGSIPU", "type": "education", "icon": "🎓" },
+    { "id": "7", "year": 2019, "month": 7, "label": "GSoC Mentor", "sublabel": "FOSSASIA", "type": "achievement", "icon": "🌟" },
+    { "id": "8", "year": 2019, "month": 9, "label": "Joined Rooter — SDE-1", "sublabel": "Esports Streaming Platform", "type": "work", "icon": "💼" },
+    { "id": "8a", "year": 2021, "month": 6, "label": "Top App · Sports Category", "sublabel": "4.3 Rating · Sports Category", "type": "achievement", "icon": "⭐" },
+    { "id": "8b", "year": 2022, "month": 12, "label": "Rooter Hits 50M+ Downloads", "sublabel": "Lifetime Downloads", "type": "achievement", "icon": "🎉" },
+    { "id": "9", "year": 2023, "month": 12, "label": "Promotion at Rooter", "sublabel": "EM-1", "type": "achievement", "icon": "🚀" },
+    { "id": "10", "year": 2024, "month": 4, "label": "Joined PhonePe", "sublabel": "Pincode Team", "type": "work", "icon": "💼" },
+    { "id": "11", "year": 2025, "month": 1, "label": "Pincode Hackathon Winner", "sublabel": "1st Place — Pinpoint", "type": "achievement", "icon": "🏆" }
+  ],
   "interests": "Passionate about building high-quality mobile experiences, cross-platform architecture with KMP/CMP, open source contribution, and mentoring the next generation of developers.",
   "blog": {
     "mediumUrl": "",

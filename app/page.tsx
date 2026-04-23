@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
 import Hero from '@/components/Hero'
 import AboutMe from '@/components/AboutMe'
+import TimelineGame from '@/components/TimelineGame'
 import Experience from '@/components/Experience'
 import Projects from '@/components/Projects'
 import Skills from '@/components/Skills'
@@ -107,6 +108,7 @@ export default function Home() {
         <Navigation />
         <Hero />
         <AboutMe />
+        <TimelineGame />
         <Experience />
         <Projects />
         <Education />

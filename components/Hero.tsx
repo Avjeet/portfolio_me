@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Mail, Download, Eye, ArrowDown } from 'lucide-react'
+import { Github, Linkedin, Mail, Download, ArrowDown } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import PhoneNumber from './PhoneNumber'
 
@@ -75,7 +75,6 @@ export default function Hero() {
     github: 'https://github.com/Avjeet',
     linkedin: 'https://www.linkedin.com/in/avjeet-singh-73572a138',
   })
-  const [visitCount, setVisitCount] = useState<number | null>(null)
   const role = useTypewriter(roles)
 
   useEffect(() => {
@@ -85,26 +84,6 @@ export default function Hero() {
         if (d.personalInfo) setPersonalInfo(d.personalInfo)
       })
       .catch(() => {})
-  }, [])
-
-  useEffect(() => {
-    const hasVisited = sessionStorage.getItem('hasVisited')
-    if (!hasVisited) {
-      fetch('/api/visits', { method: 'POST' })
-        .then((r) => r.json())
-        .then((d) => {
-          if (d.count !== undefined) setVisitCount(d.count)
-          sessionStorage.setItem('hasVisited', 'true')
-        })
-        .catch(() => {})
-    } else {
-      fetch('/api/visits')
-        .then((r) => r.json())
-        .then((d) => {
-          if (d.count !== undefined) setVisitCount(d.count)
-        })
-        .catch(() => {})
-    }
   }, [])
 
   const nameParts = ['AVJEET', 'SINGH']
@@ -135,35 +114,6 @@ export default function Hero() {
       id="home"
       className="relative min-h-screen flex flex-col items-center justify-center px-6 lg:px-8 pt-24 pb-16 overflow-hidden"
     >
-      {/* Visit count badge */}
-      {visitCount !== null && (
-        <motion.div
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.6, duration: 0.5 }}
-          className="fixed top-[72px] right-5 z-40 flex items-center gap-1.5 text-[11px] text-gray-600 font-mono"
-        >
-          <Eye size={11} />
-          <span>{visitCount.toLocaleString()} visits</span>
-        </motion.div>
-      )}
-
-      {/* Status badge */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.92, y: -10 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 0.55, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
-        className="mb-10 sm:mb-12"
-      >
-        <div className="flex items-center gap-2.5 px-5 py-2.5 rounded-full glass border border-white/10 text-sm text-gray-300">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-70" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
-          </span>
-          Available for opportunities
-        </div>
-      </motion.div>
-
       {/* Hero name — massive slide-up reveal */}
       <div className="text-center mb-5 select-none">
         {nameParts.map((word, i) => (
