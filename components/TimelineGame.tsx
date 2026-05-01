@@ -249,10 +249,16 @@ function getCtx(canvas: HTMLCanvasElement): CanvasRenderingContext2D {
 
 // ── Component ─────────────────────────────────────────────────────────────────
 export default function TimelineGame() {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const [gameState, setGameState] = useState<GameState>('idle')
   const [hitObs, setHitObs] = useState<Obs | null>(null)
   const [events, setEvents] = useState<TLEvent[]>([])
+  const [isMobile, setIsMobile] = useState(false)
+  const [showOverlay, setShowOverlay] = useState(false)
+  const [isPortrait, setIsPortrait] = useState(false)
+  const [mobileScale, setMobileScale] = useState(1)
+  const [desktopScale, setDesktopScale] = useState(1)
+  const gameContainerRef = useRef<HTMLDivElement | null>(null)
 
   // Mutable game state (RAF-accessible)
   const stateRef     = useRef<GameState>('idle')
@@ -266,6 +272,16 @@ export default function TimelineGame() {
   const rafRef       = useRef(0)
   const eventsRef    = useRef<TLEvent[]>([])
 
+  // Callback ref — DPI setup runs every time canvas mounts (desktop or overlay)
+  const setCanvasRef = useCallback((canvas: HTMLCanvasElement | null) => {
+    canvasRef.current = canvas
+    if (!canvas) return
+    const dpr = window.devicePixelRatio || 1
+    canvas.width = CW * dpr
+    canvas.height = CH * dpr
+    if (!carImg) { carImg = new Image(); carImg.src = '/car.png' }
+  }, [])
+
   const buildObs = useCallback((evs: TLEvent[]) => {
     return evs.map((e, i) => ({
       worldX: OBSTACLE_START + i * OBSTACLE_GAP,
@@ -278,16 +294,42 @@ export default function TimelineGame() {
     }))
   }, [])
 
-  // DPI setup + preload car image
+  // Scale desktop canvas to fill the container
   useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const dpr = window.devicePixelRatio || 1
-    canvas.width = CW * dpr
-    canvas.height = CH * dpr
-    carImg = new Image()
-    carImg.src = '/car.png'
+    const el = gameContainerRef.current
+    if (!el) return
+    const ro = new ResizeObserver(([entry]) => {
+      setDesktopScale(entry.contentRect.width / CW)
+    })
+    ro.observe(el)
+    return () => ro.disconnect()
   }, [])
+
+  // Detect mobile / orientation / scale
+  useEffect(() => {
+    const update = () => {
+      const mobile = window.innerWidth < 1024
+      const portrait = window.innerHeight > window.innerWidth
+      setIsMobile(mobile)
+      setIsPortrait(portrait)
+      const scaleW = window.innerWidth / CW
+      const scaleH = window.innerHeight / CH
+      setMobileScale(Math.min(scaleW, scaleH))
+    }
+    update()
+    window.addEventListener('resize', update)
+    window.addEventListener('orientationchange', update)
+    return () => {
+      window.removeEventListener('resize', update)
+      window.removeEventListener('orientationchange', update)
+    }
+  }, [])
+
+  // Lock body scroll when overlay is open
+  useEffect(() => {
+    document.body.style.overflow = showOverlay ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [showOverlay])
 
   useEffect(() => {
     fetch('/api/portfolio')
@@ -307,7 +349,7 @@ export default function TimelineGame() {
     : 3800
   const worldEnd = nowWorldX
 
-  // Static preview when idle
+  // Static preview when idle — re-runs when canvas mounts (showOverlay changes)
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas || gameState !== 'idle') return
@@ -319,13 +361,12 @@ export default function TimelineGame() {
     drawObs(ctx, obsRef.current, previewWX)
     drawNowMarker(ctx, nowWorldX, previewWX)
     drawCar(ctx, GROUND, 0)
-    // Right-side fade to suggest more content
     const fade = ctx.createLinearGradient(CW * 0.55, 0, CW, 0)
     fade.addColorStop(0, 'rgba(6,6,15,0)')
     fade.addColorStop(1, 'rgba(6,6,15,0.85)')
     ctx.fillStyle = fade
     ctx.fillRect(0, 0, CW, CH)
-  }, [gameState, events])
+  }, [gameState, events, showOverlay])
 
   const jump = useCallback(() => {
     if (stateRef.current !== 'playing') return
@@ -353,6 +394,7 @@ export default function TimelineGame() {
     if (rafRef.current) cancelAnimationFrame(rafRef.current)
     stateRef.current = 'idle'
     setGameState('idle')
+    setShowOverlay(false)
   }, [])
 
   // Game loop
@@ -507,6 +549,64 @@ export default function TimelineGame() {
     return () => window.removeEventListener('keydown', onKey)
   }, [jump])
 
+  // Shared canvas + overlays (used in both desktop and mobile overlay)
+  const gameView = (scaled: boolean) => {
+    const scale = scaled ? mobileScale : desktopScale
+    return (
+    <div
+      className="relative rounded-2xl overflow-hidden border border-white/8 shadow-2xl shadow-black/60"
+      style={{ width: CW * scale, height: CH * scale }}
+    >
+      <canvas
+        ref={setCanvasRef}
+        className="block transition-[filter] duration-300"
+        style={{
+          width: CW,
+          height: CH,
+          ...(scale !== 1 && { transform: `scale(${scale})`, transformOrigin: 'top left' }),
+          cursor: gameState === 'playing' ? 'none' : 'default',
+          filter: (gameState === 'idle' || gameState === 'dead') ? 'blur(8px) brightness(0.5)' : 'none',
+          touchAction: 'none',
+        }}
+        onClick={() => { if (gameState === 'playing') jump() }}
+      />
+
+      {gameState === 'idle' && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
+          <button
+            onClick={startGame}
+            className="flex items-center gap-2.5 px-8 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-lg shadow-lg shadow-indigo-600/30 transition-all duration-200 hover:scale-105 active:scale-95"
+          >
+            <span>🎮</span> View My Timeline
+          </button>
+          <p className="text-gray-500 text-sm text-center">
+            {scaled
+              ? 'Tap anywhere to jump · ace every achievement'
+              : <><kbd className="px-1.5 py-0.5 rounded bg-white/8 text-gray-400 text-xs font-mono">SPACE</kbd>{' '}or tap to jump · ace every achievement</>
+            }
+          </p>
+        </div>
+      )}
+
+      {gameState === 'dead' && hitObs && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
+          <p className="text-white/40 text-xs uppercase tracking-widest font-semibold">You hit a milestone!</p>
+          <div className="text-center">
+            <p className="text-white font-bold text-xl">{hitObs.label}</p>
+            <p className="text-gray-400 text-sm mt-1">{hitObs.sublabel}</p>
+          </div>
+          <button
+            onClick={startGame}
+            className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition-all duration-200 hover:scale-105 active:scale-95"
+          >
+            Try Again
+          </button>
+        </div>
+      )}
+    </div>
+  )
+  }
+
   return (
     <section id="timeline" className="relative py-28 px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
@@ -530,95 +630,80 @@ export default function TimelineGame() {
           </p>
         </motion.div>
 
-        {/* Game container */}
-        <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="relative rounded-2xl overflow-hidden border border-white/8 shadow-2xl shadow-black/60"
-        >
-          <canvas
-            ref={canvasRef}
-            width={CW}
-            height={CH}
-            className="w-full block transition-[filter] duration-300"
-            style={{
-              cursor: gameState === 'playing' ? 'none' : 'default',
-              filter: (gameState === 'idle' || gameState === 'dead') ? 'blur(8px) brightness(0.5)' : 'none',
-            }}
-            onClick={() => { if (gameState === 'playing') jump() }}
-          />
-
-          {/* Idle overlay */}
-          {gameState === 'idle' && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
-              <button
-                onClick={startGame}
-                className="flex items-center gap-2.5 px-8 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-lg shadow-lg shadow-indigo-600/30 transition-all duration-200 hover:scale-105 active:scale-95"
+        {/* Desktop: inline game — ref used by ResizeObserver to compute scale */}
+        {!isMobile && (
+          <>
+            <div ref={gameContainerRef}>
+              <motion.div
+                initial={{ opacity: 0, y: 32 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
               >
-                <span>🎮</span>
-                View My Timeline
-              </button>
-              <p className="text-gray-500 text-sm">
-                <kbd className="px-1.5 py-0.5 rounded bg-white/8 text-gray-400 text-xs font-mono">SPACE</kbd>
-                {' '}or tap to jump · ace every achievement
-              </p>
+                {gameView(false)}
+              </motion.div>
             </div>
-          )}
 
-          {/* Dead overlay */}
-          {gameState === 'dead' && hitObs && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
-              <p className="text-white/40 text-xs uppercase tracking-widest font-semibold">
-                You hit a milestone!
-              </p>
-              <div className="text-center">
-                <p className="text-white font-bold text-xl">{hitObs.label}</p>
-                <p className="text-gray-400 text-sm mt-1">{hitObs.sublabel}</p>
+            {gameState === 'won' && (
+              <div className="mt-4 flex justify-center">
+                <button onClick={startGame} className="px-5 py-2 rounded-xl bg-white/10 hover:bg-white/16 border border-white/12 text-white text-sm font-medium transition-all">
+                  See Again
+                </button>
               </div>
-              <button
-                onClick={startGame}
-                className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition-all duration-200 hover:scale-105 active:scale-95"
-              >
-                Try Again
-              </button>
-            </div>
-          )}
-
-        </motion.div>
-
-        {/* Play again after win */}
-        {gameState === 'won' && (
-          <div className="mt-4 flex justify-center">
-            <button
-              onClick={startGame}
-              className="px-5 py-2 rounded-xl bg-white/10 hover:bg-white/16 border border-white/12 text-white text-sm font-medium transition-all"
-            >
-              See Again
-            </button>
-          </div>
+            )}
+            {gameState === 'playing' && (
+              <div className="mt-4 flex justify-center">
+                <button onClick={stopGame} className="px-5 py-2.5 rounded-xl bg-white/8 hover:bg-white/14 border border-white/10 text-gray-400 hover:text-white text-sm font-medium transition-all">
+                  ✕ Stop
+                </button>
+              </div>
+            )}
+          </>
         )}
 
-        {/* Mobile jump button + stop */}
-        {gameState === 'playing' && (
-          <div className="mt-4 flex items-center justify-center gap-4">
+        {/* Mobile: teaser */}
+        {isMobile && !showOverlay && (
+          <div className="flex flex-col items-center gap-4 py-10">
             <button
-              onTouchStart={e => { e.preventDefault(); jump() }}
-              onClick={jump}
-              className="px-14 py-4 rounded-2xl bg-indigo-600/80 hover:bg-indigo-500/80 text-white font-bold text-lg active:scale-95 transition-transform select-none md:hidden"
+              onClick={() => setShowOverlay(true)}
+              className="flex items-center gap-2.5 px-8 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-lg shadow-lg shadow-indigo-600/30 transition-all duration-200 active:scale-95"
             >
-              JUMP
+              <span>🎮</span> View My Timeline
             </button>
-            <button
-              onClick={stopGame}
-              className="px-5 py-2.5 rounded-xl bg-white/8 hover:bg-white/14 border border-white/10 text-gray-400 hover:text-white text-sm font-medium transition-all"
-            >
-              ✕ Stop
-            </button>
+            <p className="text-gray-500 text-sm text-center">Tap to open · rotate to landscape for best experience</p>
           </div>
         )}
       </div>
+
+      {/* Mobile: fullscreen overlay — z-index above nav (z-50) */}
+      {isMobile && showOverlay && (
+        <div className="fixed inset-0 z-[9999] bg-[#06060f] flex flex-col items-center justify-center">
+          {isPortrait ? (
+            <div className="flex flex-col items-center gap-4 text-center px-8">
+              {/* Close — only shown in portrait since landscape has no spare UI space */}
+              <button
+                onClick={stopGame}
+                className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 text-white text-xl font-bold transition-all"
+              >
+                ✕
+              </button>
+              <span className="text-6xl">📱</span>
+              <p className="text-white font-bold text-2xl">Rotate to landscape</p>
+              <p className="text-gray-400 text-sm">The timeline game needs horizontal space</p>
+            </div>
+          ) : (
+            <div className="relative w-full h-full flex items-center justify-center">
+              {gameView(true)}
+
+              {gameState === 'won' && (
+                <button onClick={startGame} className="absolute bottom-6 left-1/2 -translate-x-1/2 px-6 py-2.5 rounded-xl bg-white/10 border border-white/12 text-white text-sm font-medium">
+                  See Again
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+      )}
     </section>
   )
 }
